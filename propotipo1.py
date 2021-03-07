@@ -1,3 +1,6 @@
+import time, random 
+import pandas as pd #para crear tablas donde se almacenaran los datos monitoreados
+
 #--------------------------FUNCIONES---------------------------
 
 # 1. SENSORES
