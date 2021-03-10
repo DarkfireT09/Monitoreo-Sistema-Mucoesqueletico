@@ -1,6 +1,12 @@
-import time, random 
+import time, random , serial
 import pandas as pd #para crear tablas donde se almacenaran los datos monitoreados
 
+
+#----------------------Conexion con arduino -------------------
+
+arduino = serial.Serial('COM5', 9600)
+
+#--------------------------------------------------------------
 #--------------------------FUNCIONES---------------------------
 
 # 1. SENSORES
@@ -10,14 +16,17 @@ import pandas as pd #para crear tablas donde se almacenaran los datos monitoread
 
 def acelerometro(): 
     a = random.randint(0,100)
+    # a = arduino.read()
     return a
 
 def pulso():
     p = random.randint(0, 200)
+    # p = arduino.read()
     return p
 
 def fuerza():
     f = random.randint(0, 100)
+    # f = arduino.read()
     return f
 
 def bateria():
