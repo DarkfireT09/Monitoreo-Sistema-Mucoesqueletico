@@ -4,7 +4,7 @@ import pandas as pd #para crear tablas donde se almacenaran los datos monitoread
 
 #----------------------Conexion con arduino -------------------
 
-arduino = serial.Serial('COM5', 9600)
+arduino = serial.Serial('COM6', 57600)
 
 #--------------------------------------------------------------
 #--------------------------FUNCIONES---------------------------
@@ -24,9 +24,16 @@ def get_information(s):
 # tengamos los materiales
 
 def acelerometro(): 
-    a = random.randint(0,100)
-    # a = arduino.read()
-    return a
+    """
+    Se obtiene informacion de la forma aceleracion(a), rotacion(g)
+    (ax,ay,az,gx,gy,gz)
+
+    Se devuelve la lista l. 
+    """
+    # a = random.randint(0,100)
+    a = arduino.read()
+    l = get_information(a)
+    return l
 
 def pulso():
     p = random.randint(0, 200)

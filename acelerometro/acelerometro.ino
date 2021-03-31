@@ -46,12 +46,12 @@ void loop() {
   float gz_deg_s = gz * (250.0/32768.0);
  
   //Mostrar las lecturas separadas por un [tab]
-  // Serial.print("a[x y z](m/s2) g[x y z](deg/s):\t");
-  Serial.print(ax_m_s2); Serial.print("\t");
-  Serial.print(ay_m_s2); Serial.print("\t");
-  Serial.print(az_m_s2); Serial.print("\t");
-  Serial.print(gx_deg_s); Serial.print("\t");
-  Serial.print(gy_deg_s); Serial.print("\t");
+  // Serial.print("a[x y z](m/s2) g[x y z](deg/s):,");
+  Serial.print(ax_m_s2); Serial.print(",");
+  Serial.print(ay_m_s2); Serial.print(",");
+  Serial.print(az_m_s2); Serial.print(",");
+  Serial.print(gx_deg_s); Serial.print(",");
+  Serial.print(gy_deg_s); Serial.print(",");
   Serial.println(gz_deg_s);
  
   delay(100);
