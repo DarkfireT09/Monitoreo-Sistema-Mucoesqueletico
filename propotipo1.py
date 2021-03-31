@@ -8,6 +8,15 @@ arduino = serial.Serial('COM5', 9600)
 
 #--------------------------------------------------------------
 #--------------------------FUNCIONES---------------------------
+# 0. Funcion para extraer la informacion de funciones futuras.
+
+def get_information(s):
+    info = s.split(",")
+    infoint = []
+    for i in info:
+        infoint.append(int(i))
+
+    return infoint
 
 # 1. SENSORES
 # Para el primer prototipo, se usan generadores random del rango y tipo de dato
