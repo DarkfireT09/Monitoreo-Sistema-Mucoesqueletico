@@ -30,8 +30,8 @@ void setup() {
   Wire.begin();           //Iniciando I2C  
   sensor.initialize();    //Iniciando el sensor
  
-  if (sensor.testConnection()) Serial.println("Sensor iniciado correctamente");
-  else Serial.println("Error al iniciar el sensor");
+  // if (sensor.testConnection()) Serial.println("Sensor iniciado correctamente");
+  // else Serial.println("Error al iniciar el sensor");
 }
  
 void loop() {
