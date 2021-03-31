@@ -31,9 +31,13 @@ def acelerometro():
     Se devuelve la lista l. 
     """
     # a = random.randint(0,100)
-    a = arduino.read()
+    a = arduino.readline()
+    a = str(a)
+    a = a[2:len(a)-5]
     l = get_information(a)
     return l
+
+
 
 def pulso():
     p = random.randint(0, 200)
