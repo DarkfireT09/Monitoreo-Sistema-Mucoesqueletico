@@ -1,119 +1,58 @@
-// calibrar_mpu6050.ino
+// escalar_valores.ino
 // Librerias I2C para controlar el mpu6050 con Arduino,
-// la libreria MPU6050.h necesita I2Cdev.h, la libreria I2Cdev.h necesita Wire.h
+// la libreria MPU6050.h necesita I2Cdev.h y la libreria I2Cdev.h necesita Wire.h
+/* 
+ Conociendo los rangos con los que está configurado nuestro MPU6050, 
+ dichos rangos pueden ser 2g/4g/8g/16g para el acelerómetro y 
+ 250/500/1000/2000(°/s) para el giroscopio.
+ Los rangos por defecto (2g y 250°/s)
+ 
+ Variable        valor mínimo  valor central  valor máximo
+ Lectura MPU6050    -32768        0             +32767 
+ Aceleración         -2g          0g            +2g
+ Velocidad angular  -250°/s       0°/s          +250°/s
+*/
  
 #include "I2Cdev.h"
 #include "MPU6050.h"
 #include "Wire.h"
  
 // La dirección del MPU6050 puede ser 0x68 o 0x69, dependiendo 
-// del estado de AD0. Si no se especifica, 0x68 estarÃ¡ implicito
+// del estado de AD0. Si no se especifica, 0x68 estará implicito
 MPU6050 sensor;
  
 // Valores RAW (sin procesar) del acelerometro y giroscopio en los ejes x,y,z
 int ax, ay, az;
 int gx, gy, gz;
  
-//Variables usadas por el filtro pasa bajos
-long f_ax,f_ay, f_az;
-int p_ax, p_ay, p_az;
-long f_gx,f_gy, f_gz;
-int p_gx, p_gy, p_gz;
-int counter=0;
- 
-//Valor de los offsets
-int ax_o,ay_o,az_o;
-int gx_o,gy_o,gz_o;
- 
 void setup() {
-  Serial.begin(57600);   //Iniciando puerto serial
+  Serial.begin(57600);    //Iniciando puerto serial
   Wire.begin();           //Iniciando I2C  
   sensor.initialize();    //Iniciando el sensor
  
   if (sensor.testConnection()) Serial.println("Sensor iniciado correctamente");
- 
-  // Leer los offset los offsets anteriores
-  ax_o=sensor.getXAccelOffset();
-  ay_o=sensor.getYAccelOffset();
-  az_o=sensor.getZAccelOffset();
-  gx_o=sensor.getXGyroOffset();
-  gy_o=sensor.getYGyroOffset();
-  gz_o=sensor.getZGyroOffset();
-  
-  Serial.println("Offsets:");
-  Serial.print(ax_o); Serial.print("\t"); 
-  Serial.print(ay_o); Serial.print("\t"); 
-  Serial.print(az_o); Serial.print("\t"); 
-  Serial.print(gx_o); Serial.print("\t"); 
-  Serial.print(gy_o); Serial.print("\t");
-  Serial.print(gz_o); Serial.println("\t");
- 
-  Serial.println("nnEnvie cualquier caracter para empezar la calibracionnn");  
-  // Espera un caracter para empezar a calibrar
-  while (true){if (Serial.available()) break;}  
-  Serial.println("Calibrando, no mover IMU");    
+  else Serial.println("Error al iniciar el sensor");
 }
  
 void loop() {
   // Leer las aceleraciones y velocidades angulares
   sensor.getAcceleration(&ax, &ay, &az);
   sensor.getRotation(&gx, &gy, &gz);
+  float ax_m_s2 = ax * (9.81/16384.0);
+  float ay_m_s2 = ay * (9.81/16384.0);
+  float az_m_s2 = az * (9.81/16384.0);
+  float gx_deg_s = gx * (250.0/32768.0);
+  float gy_deg_s = gy * (250.0/32768.0);
+  float gz_deg_s = gz * (250.0/32768.0);
  
-  // Filtrar las lecturas
-  f_ax = f_ax-(f_ax>>5)+ax;
-  p_ax = f_ax>>5;
+  //Mostrar las lecturas separadas por un [tab]
+  // Serial.print("a[x y z](m/s2) g[x y z](deg/s):\t");
+  Serial.print(ax_m_s2); Serial.print("\t");
+  Serial.print(ay_m_s2); Serial.print("\t");
+  Serial.print(az_m_s2); Serial.print("\t");
+  Serial.print(gx_deg_s); Serial.print("\t");
+  Serial.print(gy_deg_s); Serial.print("\t");
+  Serial.println(gz_deg_s);
  
-  f_ay = f_ay-(f_ay>>5)+ay;
-  p_ay = f_ay>>5;
- 
-  f_az = f_az-(f_az>>5)+az;
-  p_az = f_az>>5;
- 
-  f_gx = f_gx-(f_gx>>3)+gx;
-  p_gx = f_gx>>3;
- 
-  f_gy = f_gy-(f_gy>>3)+gy;
-  p_gy = f_gy>>3;
- 
-  f_gz = f_gz-(f_gz>>3)+gz;
-  p_gz = f_gz>>3;
- 
-  //Cada 100 lecturas corregir el offset
-  if (counter==100){
-    //Mostrar las lecturas separadas por un [tab]
-    Serial.print("promedio:"); Serial.print("\t");
-    Serial.print(p_ax); Serial.print("\t");
-    Serial.print(p_ay); Serial.print("\t");
-    Serial.print(p_az); Serial.print("\t");
-    Serial.print(p_gx); Serial.print("\t");
-    Serial.print(p_gy); Serial.print("\t");
-    Serial.println(p_gz);
- 
-    //Calibrar el acelerometro a 1g en el eje z (ajustar el offset)
-    if (p_ax>0) ax_o--;
-    else {ax_o++;}
-    if (p_ay>0) ay_o--;
-    else {ay_o++;}
-    if (p_az-16384>0) az_o--;
-    else {az_o++;}
-    
-    sensor.setXAccelOffset(ax_o);
-    sensor.setYAccelOffset(ay_o);
-    sensor.setZAccelOffset(az_o);
- 
-    //Calibrar el giroscopio a 0º/s en todos los ejes (ajustar el offset)
-    if (p_gx>0) gx_o--;
-    else {gx_o++;}
-    if (p_gy>0) gy_o--;
-    else {gy_o++;}
-    if (p_gz>0) gz_o--;
-    else {gz_o++;}
-    
-    sensor.setXGyroOffset(gx_o);
-    sensor.setYGyroOffset(gy_o);
-    sensor.setZGyroOffset(gz_o);    
- 
-    counter=0;
-  }
-  counter++;
+  delay(100);
 }
