@@ -1,69 +1,7 @@
-import time, random , serial
+import time, random
+from Funciones import *
 import pandas as pd #para crear tablas donde se almacenaran los datos monitoreados
 
-
-#----------------------Conexion con arduino -------------------
-
-arduino = serial.Serial('COM6', 57600)
-
-#--------------------------------------------------------------
-#--------------------------FUNCIONES---------------------------
-# 0. Funcion para extraer la informacion de funciones futuras.
-
-def get_information(s):
-    info = s.split(",")
-    infoint = []
-    for i in info:
-        infoint.append(int(i))
-
-    return infoint
-
-# 1. SENSORES
-# Para el primer prototipo, se usan generadores random del rango y tipo de dato
-# que suelen obtenerse a partir de los sensores, las funciones se modificarán cuando
-# tengamos los materiales
-
-def acelerometro(): 
-    """
-    Se obtiene informacion de la forma aceleracion(a), rotacion(g)
-    (ax,ay,az,gx,gy,gz)
-
-    Se devuelve la lista l. 
-    """
-    # a = random.randint(0,100)
-    a = arduino.readline()
-    a = str(a)
-    a = a[2:len(a)-5]
-    l = get_information(a)
-    return l
-
-
-
-def pulso():
-    p = random.randint(0, 200)
-    # p = arduino.read()
-    return p
-
-def fuerza():
-    f = random.randint(0, 100)
-    # f = arduino.read()
-    return f
-
-def bateria():
-    b = random.randint(0, 100)
-    if b <= 15:
-        print("ALERTA! Bateria baja (menos del 15%)")
-    return b
-    
-
-# 2. CONEXION BLUETOOTH
-# El programa empieza a ejecutarse una vez se establezca la conexión bluetooth
-# Por ahora, generamos o un 0 o un 1 aleatorios, donde 1 significa conexión establecida
-# y cero lo contrario
-
-def conexion_bt():
-    bt = random.randint(0, 1)
-    return bt
 
 # 3. ACTUADORES
 # Activar modulos de vibración para notificaciones
@@ -88,20 +26,16 @@ def ciclo_monitoreo():
     
         movimiento = []
         pulsaciones = []
-        presion = []
          
         while tmp <= 30:
             
             time.sleep(180)
             
             a = acelerometro()
-            p = pulso()
-            f = fuerza()
-            bateria()
+            p = pulsioximetro()
             
             movimiento.append(a)
             pulsaciones.append(p)
-            presion.append(f)
             tmp += 3
         
         print ("Ciclo de monitoreo completo")
