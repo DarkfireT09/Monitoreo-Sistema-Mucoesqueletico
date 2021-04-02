@@ -11,9 +11,10 @@ arduino = serial.Serial('COM6', 57600)
 
 def get_information(s):
     info = s.split(",")
-    infoint = []
+    infofloat = []
     for i in info:
-        infoint.append(int(i))
+        infofloat.append(float(i))
+    return infofloat
 
     
 def get_arduino_data():
