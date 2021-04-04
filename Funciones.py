@@ -40,7 +40,7 @@ def acelerometro():
     Se devuelve la lista l. 
     """
     # a = random.randint(0,100)
-    if len(get_arduino_data() != 6):
+    if len(get_arduino_data()) != 6:
         raise ValueError("Leyendo datos incorrectos")
 
     return get_arduino_data()
@@ -50,7 +50,7 @@ def pulsioximetro():
     Se obtiene informacion de la forma:
     pulso, concentracion
     """
-    if len(get_arduino_data() != 2):
+    if len(get_arduino_data()) != 2:
         raise ValueError("Leyendo datos incorrectos")
     return get_arduino_data()
 
