@@ -2,7 +2,11 @@ import serial
 
 #----------------------Conexion con arduino -------------------
 
-arduino = serial.Serial('COM6', 57600)
+try:
+    arduino = serial.Serial('COM6', 57600)
+except:
+    raise ValueError("Dispositivo no en linea")
+    # send_to_JS("consol.error('dipositivo no esta en linea')")
 
 
 # DATOS DE ARDUINO
@@ -36,6 +40,9 @@ def acelerometro():
     Se devuelve la lista l. 
     """
     # a = random.randint(0,100)
+    if len(get_arduino_data() != 6):
+        raise ValueError("Leyendo datos incorrectos")
+
     return get_arduino_data()
 
 def pulsioximetro():
@@ -43,7 +50,8 @@ def pulsioximetro():
     Se obtiene informacion de la forma:
     pulso, concentracion
     """
+    if len(get_arduino_data() != 2):
+        raise ValueError("Leyendo datos incorrectos")
     return get_arduino_data()
-
 
 
