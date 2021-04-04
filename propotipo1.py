@@ -26,6 +26,9 @@ def main():
     while True:
         
         if time.perf_counter() <= k+1500:
+
+            arduino.write(bytes("a", 'utf-8')) # Aun no implementado en arduino.
+            time.sleep(0.05)
             try:
                 info_acelerometro = acelerometro()
             except:
@@ -40,6 +43,9 @@ def main():
             """
 
         else:
+
+            arduino.write(bytes("p", 'utf-8')) # Aun no implementado en arduino.
+            time.sleep(0.05)
 
             try:
                 info_pulsioximetro = pulsioximetro()
