@@ -23,6 +23,10 @@ def apagar(): #Luego definiremos las instrucciones para apagar el dispositivo
 #-------------------INICIO DEL PROGRAMA--------------
 def main():
     k = time.perf_counter()
+
+    texto_acelerometro = open('acelerometro.txt', 'w')
+    texto_pulsioximetro = open('pulsioximetro.txt', 'w')
+
     while True:
         
         if time.perf_counter() <= k+1500:
@@ -31,8 +35,12 @@ def main():
             time.sleep(0.05)
             try:
                 info_acelerometro = acelerometro()
+                texto_acelerometro.write(str(info_acelerometro))
             except:
                 arduino.close()
+                texto_pulsioximetro.close()
+                texto_acelerometro.close()
+
                 raise ValueError("Leyendo datos incorrectos en acelerometro")
             
             """
@@ -49,8 +57,11 @@ def main():
 
             try:
                 info_pulsioximetro = pulsioximetro()
+                texto_pulsioximetro.write(str(info_pulsioximetro))
             except:
                 arduino.close()
+                texto_pulsioximetro.close()
+                texto_acelerometro.close()
                 raise ValueError("Leyendo datos incorrectos en pulsioximetro")
             info_pulsioximetro = pulsioximetro()
 
@@ -76,6 +87,8 @@ def main():
 
         print ("¡Hasta la próxima!")
     arduino.close()
+    texto_pulsioximetro.close()
+    texto_acelerometro.close()
 
         
 
@@ -83,6 +96,5 @@ main()
 
 
 #Apagar
-
 
 
