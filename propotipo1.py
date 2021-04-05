@@ -35,7 +35,8 @@ def main():
             time.sleep(0.05)
             try:
                 info_acelerometro = acelerometro()
-                texto_acelerometro.write(str(info_acelerometro))
+                t = time.strftime('[%Y-%m-%d, %H:%M:%S]',time.localtime())
+                texto_acelerometro.write(t + str(info_acelerometro) + '\n')
             except:
                 arduino.close()
                 texto_pulsioximetro.close()
@@ -57,7 +58,8 @@ def main():
 
             try:
                 info_pulsioximetro = pulsioximetro()
-                texto_pulsioximetro.write(str(info_pulsioximetro))
+                t = time.strftime('[%Y-%m-%d, %H:%M:%S]',time.localtime())
+                texto_pulsioximetro.write(t + str(info_pulsioximetro) + '\n')
             except:
                 arduino.close()
                 texto_pulsioximetro.close()
@@ -90,7 +92,6 @@ def main():
     texto_pulsioximetro.close()
     texto_acelerometro.close()
 
-        
 
 main()
 
