@@ -1,26 +1,20 @@
-#include <SoftwareSerial.h>  // libreria que permite establecer pines digitales
-        // para comunicacion serie
-
-//SoftwareSerial miBT(0, 1);  // pin 10 como RX, pin 11 como TX
-SoftwareSerial miBT(10,11);
-
-
-
-void setup(){
-  Serial.begin(9600);   // comunicacion de monitor serial a 9600 bps
-  Serial.println("Listo");  // escribe Listo en el monitor
-
-  pinMode(10, INPUT);
-  pinMode(11, OUTPUT);
-  
-  miBT.begin(38400);    // comunicacion serie entre Arduino y el modulo a 38400 bps
-}
-
-void loop(){
-if (miBT.available())       // si hay informacion disponible desde modulo
-   Serial.write(miBT.read());   // lee Bluetooth y envia a monitor serial de Arduino
-
-if (Serial.available())     // si hay informacion disponible desde el monitor serial
-   miBT.write(Serial.read());   // lee monitor serial y envia a Bluetooth
-
-}
+#include <SoftwareSerial.h>
+SoftwareSerial BT1(10, 11); // RX | TX
+void setup()
+  { pinMode(8, OUTPUT);        // Al poner en HIGH forzaremos el modo AT
+    pinMode(9, OUTPUT);        // cuando se alimente de aqui
+    digitalWrite(9, HIGH);
+    delay (500) ;              // Espera antes de encender el modulo
+    Serial.begin(9600);
+    Serial.println("Levantando el modulo HC-06");
+    digitalWrite (8, HIGH);    //Enciende el modulo
+    Serial.println("Esperando comandos AT:");
+    BT1.begin(38400); 
+  }
+ 
+void loop()
+  {  if (BT1.available())
+           Serial.write(BT1.read());
+     if (Serial.available())
+        BT1.write(Serial.read());
+  }
