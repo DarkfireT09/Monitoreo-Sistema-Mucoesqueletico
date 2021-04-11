@@ -53,6 +53,7 @@ void loop() {
   Serial.print(gx_deg_s); Serial.print(",");
   Serial.print(gy_deg_s); Serial.print(",");
   Serial.println(gz_deg_s);
- 
+
   delay(100);
 }
+

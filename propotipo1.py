@@ -50,7 +50,8 @@ def main():
             Y ENVIO DE DATOS A JS
 
             """
-
+        
+ 
         else:
 
             arduino.write(bytes("p", 'utf-8')) # Aun no implementado en arduino.
