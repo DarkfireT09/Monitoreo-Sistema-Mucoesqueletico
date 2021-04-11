@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<head>
+<style type="text/css">
+  body {
+	color: black;
+	background-color:white;
+	font-family: "Segoe UI";
+	}
+
+  #usuario{
+	background-color: rgb(0, 51, 102);
+	color: white;
+	position:absolute; 
+	top:0; 
+	left:0;
+	width: 300px;
+	height: 72px;
+	}
+
+  #titulo{
+	background-color: rgb(0, 102, 153);
+	position:absolute; 
+	top:0; 
+	left:300px;
+	width: 1047px;
+	}
+
+  #menu{
+	background-color: rgb(0, 102, 153);
+	position: absolute;
+  	top: 72px;
+  	left: 0;
+  	width: 300px;
+  	height: 590px;
+	}
+
+  #alertas{
+	background-color: rgb(204, 153, 0);
+	position: absolute;
+	top: 100px;
+	left: 350px;
+	width: 400px;
+	height: 200px;
+	}
+
+  #ritmo{
+	background-color: rgb(128, 0, 0);
+	position: absolute;
+	top: 100px;
+	left: 850px;
+	width: 400px;
+	height: 200px;
+	}
+
+  #actividad{
+	background-color: rgb(153, 51, 102);
+	position: absolute;
+	top: 350px;
+	left: 350px;
+	width: 400px;
+	height: 200px;
+	}
+
+  #oxigeno{
+	background-color: rgb(51, 153, 102);
+	position: absolute;
+	top: 350px;
+	left: 850px;
+	width: 400px;
+	height: 200px;
+	}
+
+  #creditos{
+	background-color: white;
+	position: absolute;
+	bottom: 0px;
+	left: 300px;
+	height: 70px;
+	}
+
+  </style>
+</head>
+{% endblock %}
+
+{% block body %}
+<body>
+	<div id="titulo">
+	<h2 style="text-align:center;">MONITOREO SISTEMA MUSCULOESQUELÉTICO</h2>
+	</div>
+
+	<div id="usuario">
+		<p style="text-align:center;">Nombre de Usuario</p>
+	</div>
+
+	<div id="menu">
+	<h4 style="text-align:center;">MENU PRINCIPAL</h4>
+	<p style="text-align:center;">Aquí se albergarán los links de las siguientes páginas</p>
+		<ul>
+  			<li>Datos del Usuario</li>
+  			<li>Reporte Actividad Física</li>
+  			<li>Reporte Ritmo Cardiaco</li>
+			<li>Reporte Nivel de Oxígeno</li>
+  			<li>Historial </li>
+  			<li>Información del Dispositivo</li>
+		</ul>
+	</div>
+
+	<div id = "alertas">
+		<h3 style="text-align:center;">Aquí Apareceran el número de alertas</h3>
+	</div>
+
+	<div id = "ritmo">
+		<h3 style="text-align:center;">Aquí aparecerá el último ritmo cardiaco registrado</h3>
+	</div>
+
+	<div id = "actividad">
+		<h3 style="text-align:center;">Aquí aparecerá el porcentaje de actividad física</h3>
+	</div>
+	
+	<div id = "oxigeno">
+		<h3 style="text-align:center;">Aquí aparecerá el nivel de oxígeno</h3>
+	</div>
+
+	<div id = "creditos">
+		<p style="text-align:center;"> <strong>Proyecto Conerstone.</strong>
+		Ana Garzón, Camilo Fernández, Daniel Leyva, Gabriela Linares, Guillermo Rivero, Santiago Linares, Winston Pernett, David Alejandro Meléndez.
+		<strong>MACC UR</strong></p>
+	</div>
+  
+</body>
+{% endblock %}
