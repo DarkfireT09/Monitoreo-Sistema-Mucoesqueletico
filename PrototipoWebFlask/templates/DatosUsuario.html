@@ -1,3 +1,5 @@
+{% extends 'base2.html' %}
+{% block head %}
 <head>
 <style type="text/css">
   body {
@@ -41,7 +43,23 @@
 	height: 70px;
 	}
 
-  </style>
+  #Tabla{
+	position: absolute;
+	left:550px;
+	top:100px;	
+	}
+
+  table, th, td{
+  	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+	}
+
+  th, td{
+ 	padding: 15px;
+	}
+
+</style>
 </head>
 {% endblock %}
 
@@ -58,6 +76,7 @@
 	<div id="menu">
 	<h4 style="text-align:center;">MENU PRINCIPAL</h4>
 		<ul>
+			<li>Inicio</li>
   			<li>Datos del Usuario</li>
   			<li>Reporte Actividad Física</li>
   			<li>Reporte Ritmo Cardiaco</li>
@@ -73,5 +92,52 @@
 		Ana Garzón, Camilo Fernández, Daniel Leyva, Gabriela Linares, Guillermo Rivero, Santiago Linares, Winston Pernett, David Alejandro Meléndez.
 		<strong>MACC UR</strong></p>
 	</div>
+
+	<div id = "Tabla">
+		<table style="width:100%">
+ 			
+  			<tr>
+    				<td style="width: 250px;padding: 15px;"><strong>Nombre</strong></td>
+   				<td style="width: 250px;"></td>
+  			</tr>
+
+			<tr>
+    				<td><strong>Apellido</strong></td>
+   				<td></td>
+  			</tr>
+
+			<tr>
+    				<td><strong>Género</strong></td>
+   				<td></td>
+  			</tr>
+
+			<tr>
+    				<td><strong>Peso</strong></td>
+   				<td></td>
+  			</tr>
+
+			<tr>
+    				<td><strong>Talla</strong></td>
+   				<td></td>
+  			</tr>
+			
+			<tr>
+    				<td><strong>Edad</strong></td>
+   				<td></td>
+  			</tr>
+			
+			<tr>
+    				<td><strong>Ritmo Cardiaco Basal</strong></td>
+   				<td></td>
+  			</tr>
+
+			<tr>
+				<td><strong>Índice de Masa Corporal</strong></td>
+   				<td></td>
+			</tr>
+
+		</table>
+	</div>
   
 </body>
+{% endblock %}
