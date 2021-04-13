@@ -3,7 +3,7 @@ import serial
 #----------------------Conexion con arduino -------------------
 
 try:
-    arduino = serial.Serial('COM6', 57600)
+    arduino = serial.Serial('COM7', 57600)
 except:
     raise ValueError("Dispositivo no en linea")
     # send_to_JS("consol.error('dipositivo no esta en linea')")
