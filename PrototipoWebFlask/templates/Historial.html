@@ -61,12 +61,13 @@
 	<div id="menu">
 	<h4 style="text-align:center;">MENU PRINCIPAL</h4>
 		<ul>
-  			<li>Datos del Usuario</li>
-  			<li>Reporte Actividad Física</li>
-  			<li>Reporte Ritmo Cardiaco</li>
-			<li>Reporte Nivel de Oxígeno</li>
-  			<li>Historial </li>
-  			<li>Información del Dispositivo</li>
+			<li><a href="{{ url_for('index') }}">Inicio</a></li>
+			<li><a href="{{ url_for('user_data') }}">Datos del Usuario</a></li>
+			<li><a href="{{ url_for('reporte_act') }}">Reporte Actividad Física</a></li>
+			<li><a href="{{ url_for('reporte_cadc') }}">Reporte Ritmo Cardiaco</a></li>
+			<li><a href="{{ url_for('reporte_ox') }}">Reporte Nivel de Oxígeno</a></li>
+			<li><a href="{{ url_for('historial') }}">Historial</a></li>
+			<li><a href="{{ url_for('informacion') }}">Información del Dispositivo</a></li>
 		</ul>
 	</div>
 

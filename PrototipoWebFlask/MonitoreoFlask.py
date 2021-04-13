@@ -41,6 +41,11 @@ def historial():
     return render_template('Historial.html')
 
 
+@app.route('/informacion')
+def informacion():
+    return render_template('Informacion.html')
+
+
 @app.route('/reporte_act')
 def reporte_act():
     return render_template('ReporteActividad.html')
