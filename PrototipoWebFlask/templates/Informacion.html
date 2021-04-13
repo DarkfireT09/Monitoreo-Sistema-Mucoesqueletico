@@ -1,53 +1,57 @@
+{% extends 'base2.html' %}
+
+{% block head %}
+
 <head>
-<style type="text/css">
-  body {
-	color: black;
-	background-color:white;
-	font-family: "Segoe UI";
-	}
+	<style type="text/css">
+		body {
+			color: black;
+			background-color: white;
+			font-family: "Segoe UI";
+		}
 
-  #menu{
-	background-color: rgb(0, 102, 153);
-	position: absolute;
-  	top: 72px;
-  	left: 0;
-  	width: 300px;
-  	height: 590px;
-	}
+		#menu {
+			background-color: rgb(0, 102, 153);
+			position: absolute;
+			top: 72px;
+			left: 0;
+			width: 300px;
+			height: 590px;
+		}
 
-  #usuario{
-	background-color: rgb(0, 51, 102);
-	color: white;
-	position:absolute; 
-	top:0; 
-	left:0;
-	width: 300px;
-	height: 72px;
-	}
+		#usuario {
+			background-color: rgb(0, 51, 102);
+			color: white;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 300px;
+			height: 72px;
+		}
 
-  #titulo{
-	background-color: rgb(0, 102, 153);
-	position:absolute; 
-	top:0; 
-	left:300px;
-	width: 1047px;
-	}
+		#titulo {
+			background-color: rgb(0, 102, 153);
+			position: absolute;
+			top: 0;
+			left: 300px;
+			width: 1047px;
+		}
 
-  #info{
-	background-color: white;
-	position: absolute;
-	top: 80px;
-	left: 310px;
-	}
-
-  </style>
+		#info {
+			background-color: white;
+			position: absolute;
+			top: 80px;
+			left: 310px;
+		}
+	</style>
 </head>
 {% endblock %}
 
 {% block body %}
+
 <body>
 	<div id="titulo">
-	<h2 style="text-align:center;">INFORMACIÓN DEL DISPOSITIVO</h2>
+		<h2 style="text-align:center;">INFORMACIÓN DEL DISPOSITIVO</h2>
 	</div>
 
 	<div id="usuario">
@@ -55,34 +59,41 @@
 	</div>
 
 	<div id="menu">
-	<h4 style="text-align:center;">MENU PRINCIPAL</h4>
+		<h4 style="text-align:center;">MENU PRINCIPAL</h4>
 		<ul>
-  			<li>Datos del Usuario</li>
-  			<li>Reporte Actividad Física</li>
-  			<li>Reporte Ritmo Cardiaco</li>
-			<li>Reporte Nivel de Oxígeno</li>
-  			<li>Historial </li>
-  			<li>Información del Dispositivo</li>
+			<li><a href="{{ url_for('index') }}">Inicio</a></li>
+			<li><a href="{{ url_for('user_data') }}">Datos del Usuario</a></li>
+			<li><a href="{{ url_for('reporte_act') }}">Reporte Actividad Física</a></li>
+			<li><a href="{{ url_for('reporte_cadc') }}">Reporte Ritmo Cardiaco</a></li>
+			<li><a href="{{ url_for('reporte_ox') }}">Reporte Nivel de Oxígeno</a></li>
+			<li><a href="{{ url_for('historial') }}">Historial</a></li>
 		</ul>
 	</div>
 
 	<div id=info>
-		<p>Este prototipo fue desarrollado por Ana Garzón, Camilo Fernández, Daniel Leyva, Gabriela Linares, Guillermo Rivero, Santiago Linares, Winston Pernett y David Alejandro Meléndez
-		estudiantes del pregrado de <strong>Matemáticas Aplicadas y Ciencias de la Computación en La Universidad del Rosario</strong> para la materia <strong>Proyecto Cornerstone</strong> 
-		dictada por el profesor Mario Fernando Jiménez Hernández, durante el primer semestre del año 2021.</p>
+		<p>Este prototipo fue desarrollado por Ana Garzón, Camilo Fernández, Daniel Leyva, Gabriela Linares, Guillermo
+			Rivero, Santiago Linares, Winston Pernett y David Alejandro Meléndez
+			estudiantes del pregrado de <strong>Matemáticas Aplicadas y Ciencias de la Computación en La Universidad del
+				Rosario</strong> para la materia <strong>Proyecto Cornerstone</strong>
+			dictada por el profesor Mario Fernando Jiménez Hernández, durante el primer semestre del año 2021.</p>
 
-		<p> El proyecto tiene como objetivos el desarrollo un dispositivo wearable, que recolecte, procese y muestre datos al 
-		usuario sobre su estado de salud y actividades físicas en tiempo real; Esta orientado hacia personas que realicen teletrabajo, y busca una estrategia tecnológica que
-		contribuya a la prevención de algunos padecimientos relacionados con esta actividad.
-		Para esto, se diseñó una muñequera que alberga un dispositivo creado con Arduino Lillypad y que transfiera datos de salud al presente aplicativo, donde el usuario puede
-		visualizar los datos recopilados y recibir alertas.</p>
-		
+		<p> El proyecto tiene como objetivos el desarrollo un dispositivo wearable, que recolecte, procese y muestre
+			datos al
+			usuario sobre su estado de salud y actividades físicas en tiempo real; Esta orientado hacia personas que
+			realicen teletrabajo, y busca una estrategia tecnológica que
+			contribuya a la prevención de algunos padecimientos relacionados con esta actividad.
+			Para esto, se diseñó una muñequera que alberga un dispositivo creado con Arduino Lillypad y que transfiera
+			datos de salud al presente aplicativo, donde el usuario puede
+			visualizar los datos recopilados y recibir alertas.</p>
+
 		<h3>Guía de Uso</h3>
 
 		<p>Aquí insertaremos la explicación con imágenes del uso del dispositivo</p>
 
-		<p>Para mayor información, visite nuestro repositorio en GitHub: https://github.com/DarkfireT09/Monitoreo-Sistema-Muscoloesqueletico </p>
+		<p>Para mayor información, visite nuestro repositorio en GitHub:
+			https://github.com/DarkfireT09/Monitoreo-Sistema-Muscoloesqueletico </p>
 	</div>
 
-  
+
 </body>
+{% endblock %}
