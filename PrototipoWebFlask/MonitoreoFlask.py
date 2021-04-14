@@ -4,27 +4,22 @@ Code of the controller for the web app.
 
 from flask import Flask, render_template, request, url_for
 import sqlalchemy
+import psycopg2
+
+# Conexion con la base de datos
+try:
+    conexion = psycopg2.connect(host='127.0.0.1', port='5432', dbname='Cornerstone',
+                                user='postgres', password='1234')
+    print("Conexion con la base de datos exitosa!")
+except:
+    print("La conexion con la base de datos ha fallado.")
+    cursor.close()
+    conexion.close()
+cursor = conexion.cursor()
 
 app = Flask(__name__)
 
-# conectar con una base de datos SQL -- Revisar como conectar con Postgres PROBLEMA
-
-"""
-app.config['SQLALCHEMY_DATABASE_URI'] = ['sqlite:///']
-db = SQAlchemy(app)
-
-class Todo(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    content = db.Column(db.String(200), nullable=False)
-    completed = db.Column(db.Integer, default=0)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    def __repr__(self):
-        return '<Task %r>' % self.id
-
-
-"""
-
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:5432@localhost/Cornerstone'
 
 @app.route('/')
 def index():
@@ -33,6 +28,15 @@ def index():
 
 @app.route('/user_data')
 def user_data():
+    cursor.execute(
+        """
+        SELECT * FROM public.persons
+        ORDER BY id ASC 
+        """
+    )
+    rows = cursor.fetchall()
+    for row in rows:
+        print("Yahoo: ", row)
     return render_template('DatosUsuario.html')
 
 
