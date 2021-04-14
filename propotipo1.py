@@ -37,13 +37,9 @@ def main():
                 Pulsioximetro: YYYY,MM,DD,P,O
             """
 
-            arduino.write("a".encode()) # Implementacion teorica, no probado.
             try:
                 # YYYY,MM,DD,AX,AY,AZ,GX,GY,GZ
-                a = arduino.readline()
-                a = a.decode()
-                t = time.strftime('%Y-%m-%d,%H:%M:%S',time.localtime())
-                texto_acelerometro.write(t + ',' + str(a) + '\n')
+                get_data("a",texto_acelerometro,6)
             except:
                 arduino.close()
                 texto_pulsioximetro.close()
@@ -60,15 +56,10 @@ def main():
         
  
         else:
-
-            arduino.write("p".encode()) # NO implementado, se obtiene por defecto 0,1.
+             # NO implementado, se obtiene por defecto 0,1.
 
             try:
-                p = arduino.readline()
-                p = p.decode()
-                t = time.strftime('%Y-%m-%d,%H:%M:%S',time.localtime())
-                # print(info_pulsioximetro)
-                texto_pulsioximetro.write(t + ',' + str(p) + '\n')
+                get_data("p",texto_acelerometro,2)
             except:
                 arduino.close()
                 texto_pulsioximetro.close()
