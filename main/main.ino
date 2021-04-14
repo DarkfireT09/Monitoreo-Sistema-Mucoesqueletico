@@ -10,7 +10,12 @@ MPU6050 sensor;
 int ax, ay, az;
 int gx, gy, gz;
 
-void setup() { Serial.begin(57600); }
+void setup() { 
+  
+  Serial.begin(57600); 
+  Wire.begin();           //Iniciando I2C  
+  sensor.initialize();    //Iniciando el sensor
+  }
 
 void loop() {
     if (Serial.available()) {
