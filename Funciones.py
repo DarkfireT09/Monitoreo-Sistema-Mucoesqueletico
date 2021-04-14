@@ -1,4 +1,4 @@
-import serial
+import serial, time
 
 #----------------------Conexion con arduino -------------------
 
@@ -8,54 +8,23 @@ except:
     raise ValueError("Dispositivo no en linea")
     # send_to_JS("consol.error('dipositivo no esta en linea')")
 
+"""
+Función para la obtención de datos de los sensores
+Toma:
+    Sensor: 'a'/'p' dependiendo del Sensor
+    Archivo: 'acelerometro'/'pulsioximetro' se almacenan los datos
+    n: '2'/'5' 
+"""
+def get_data(sensor, archivo, n): 
+    arduino.write(sensor.encode())
+    time.sleep(0.1)
+    i = arduino.readline()
+    i = i.decode()
+    print(i)
+    t = time.strftime('%Y-%m-%d,%H:%M:%S',time.localtime())
+    if len(i.split(',')) == n:
+        archivo.write(t + ',' + str(i) + '\n')
 
-# DATOS DE ARDUINO
-#   Funciones encargadas de obtener informacion del arduino
-#   y organizarlas en listas.
 
-def get_information(s):
-    info = s.split(",")
-    infofloat = []
-    for i in info:
-        infofloat.append(float(i))
-    return infofloat
-
-    
-def get_arduino_data():
-    a = arduino.readline()
-    a = str(a)
-    a = a[2:len(a)-5]
-    l = get_information(a)
-    return l
-
-def get_data():
-    a = arduino.readline()
-    return a.decode()
-
-# SENSORES
-#   Se usan las funciones cradas anteriormente para recolectar
-#   los datos segun el sensor.
-
-def acelerometro(): 
-    """
-    Se obtiene informacion de la forma aceleracion(a), rotacion(g)
-    (ax,ay,az,gx,gy,gz)
-
-    Se devuelve la lista l. 
-    """
-    # a = random.randint(0,100)
-    # if len(get_arduino_data()) != 6:
-    #     raise ValueError("Leyendo datos incorrectos")
-
-    return get_data()
-
-def pulsioximetro():
-    """
-    Se obtiene informacion de la forma:
-    pulso, concentracion
-    """
-    # if len(get_arduino_data()) != 2:
-    #     raise ValueError("Leyendo datos incorrectos")
-    return get_data()
 
 
