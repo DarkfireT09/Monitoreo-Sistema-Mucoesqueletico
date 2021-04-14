@@ -31,12 +31,19 @@ def main():
         
         if time.perf_counter() <= k+1500:
 
-            arduino.write(bytes("a", 'utf-8')) # Aun no implementado en arduino.
-            time.sleep(0.05)
+            """
+            El formato actual es:
+                Acelerometro: YYYY,MM,DD,AX,AY,AZ,GX,GY,GZ
+                Pulsioximetro: YYYY,MM,DD,P,O
+            """
+
+            arduino.write("a".encode()) # Implementacion teorica, no probado.
             try:
-                info_acelerometro = acelerometro()
-                t = time.strftime('[%Y-%m-%d, %H:%M:%S]',time.localtime())
-                texto_acelerometro.write(t + str(info_acelerometro) + '\n')
+                # YYYY,MM,DD,AX,AY,AZ,GX,GY,GZ
+                a = arduino.readline()
+                a = a.decode()
+                t = time.strftime('%Y-%m-%d,%H:%M:%S',time.localtime())
+                texto_acelerometro.write(t + ',' + str(a) + '\n')
             except:
                 arduino.close()
                 texto_pulsioximetro.close()
@@ -54,13 +61,14 @@ def main():
  
         else:
 
-            arduino.write(bytes("p", 'utf-8')) # Aun no implementado en arduino.
-            time.sleep(0.05)
+            arduino.write("p".encode()) # NO implementado, se obtiene por defecto 0,1.
 
             try:
-                info_pulsioximetro = pulsioximetro()
-                t = time.strftime('[%Y-%m-%d, %H:%M:%S]',time.localtime())
-                texto_pulsioximetro.write(t + str(info_pulsioximetro) + '\n')
+                p = arduino.readline()
+                p = p.decode()
+                t = time.strftime('%Y-%m-%d,%H:%M:%S',time.localtime())
+                # print(info_pulsioximetro)
+                texto_pulsioximetro.write(t + ',' + str(p) + '\n')
             except:
                 arduino.close()
                 texto_pulsioximetro.close()
