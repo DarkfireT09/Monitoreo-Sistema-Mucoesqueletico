@@ -65,7 +65,6 @@ def main():
                 texto_pulsioximetro.close()
                 texto_acelerometro.close()
                 raise ValueError("Leyendo datos incorrectos en pulsioximetro")
-            info_pulsioximetro = pulsioximetro()
 
             """
             
