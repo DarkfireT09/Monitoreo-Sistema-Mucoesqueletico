@@ -21,6 +21,7 @@ app = Flask(__name__)
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:5432@localhost/Cornerstone'
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
