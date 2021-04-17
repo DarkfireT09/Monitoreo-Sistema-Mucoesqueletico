@@ -21,9 +21,10 @@ def get_data(sensor, archivo, n):
     i = arduino.readline()
     i = i.decode()
     print(i)
-    t = time.strftime('%Y-%m-%d,%H:%M:%S',time.localtime())
+    t = time.strftime('%Y,%m,%d%H:%M:%S',time.localtime())
     if len(i.split(',')) == n:
         archivo.write(t + ',' + str(i) + '\n')
+        return t + ',' + str(i) + '\n'
 
 
 
