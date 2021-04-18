@@ -1,6 +1,6 @@
 import serial
 import time
-import psycopgs2
+import psycopg2
 # ----------------------Conexion con arduino -------------------
 
 try:
@@ -23,12 +23,37 @@ def get_data(sensor, archivo, n):
     time.sleep(0.1)
     i = arduino.readline()
     i = i.decode()
-    print(i)
-    t = time.strftime('%Y,%m,%d%H:%M:%S', time.localtime())
+    # print(i)
+    t = time.strftime('%Y,%m,%d,%H,%M,%S', time.localtime())
     if len(i.split(',')) == n:
         archivo.write(t + ',' + str(i) + '\n')
         return t + ',' + str(i) + '\n'
+    return t + ",0,0,0,0,0,0" + "\n"
 
+def alerta(l, archivo):
+    cont = 0
+    while (float(l[6]) < -6):
+        cont +=1
+        time.sleep(1)
+        if cont == 3:
+            break
+        l = get_data("a", archivo, 6)
+        l = l.split(",")
+
+    if cont >= 3:
+        arduino.write("v".encode())
+        while True:
+            cont = 0
+            print ("alerta")
+            i = arduino.readline()
+            i = i.decode()
+            try:
+                i = int(i)
+                print("exito")
+            except :
+                pass
+            if i == 1:
+                break
 
 def connect_to_data_base():
     """
