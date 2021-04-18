@@ -1,24 +1,5 @@
-import time, random
 from Funciones import *
 import pandas as pd #para crear tablas donde se almacenaran los datos monitoreados
-
-
-
-# 3. ACTUADORES
-# Activar modulos de vibración para notificaciones
-# Vibrar y apagar al no recibir datos o recibir datos sin sentido por más de 10 minutos
-
-def vibrar(): #Luego definiremos las instrucciones para generar la vibración
-    return 1
-
-def apagar(): #Luego definiremos las instrucciones para apagar el dispositivo
-    return 1
-
-# 4. RESTRICCIONES DE TIEMPO
-# Funciones que permiten apagar el dispositivo si no recibe respuestas en un periodo definido de tiempo.
-
-# 5. MONITOREO
-   
 
 #-------------------INICIO DEL PROGRAMA--------------
 def main():
@@ -26,9 +7,11 @@ def main():
 
     texto_acelerometro = open('acelerometro.txt', 'w')
     texto_pulsioximetro = open('pulsioximetro.txt', 'w')
-
     while True:
-        
+        """
+        Ciclo cada 25 min lee el pulsioximetro, si detecta
+        valores anomalos manda alerta
+        """
         if time.perf_counter() <= k+1500:
 
             """
@@ -38,40 +21,45 @@ def main():
             """
 
             try:
-                # YYYY,MM,DD,AX,AY,AZ,GX,GY,GZ
-                get_data("a",texto_acelerometro,6)
+                """
+                Obtencion de datos, pasado a lista.
+                """
+                l = get_data("a", texto_acelerometro, 6)
+                l = l.split(",")
+                print(l)
+                
+                """
+                SISTEMA DE ALERTA
+                """
+                if(float(l[6]) < -6):
+                    alerta(l, texto_acelerometro)
+                time.sleep(1)
             except:
                 arduino.close()
-                texto_pulsioximetro.close()
                 texto_acelerometro.close()
+                texto_pulsioximetro.close()
+                raise ValueError("Error en acelerometro")
 
-                raise ValueError("Leyendo datos incorrectos en acelerometro")
-            
-            """
-            
-            SISTEMA DE ALERTA
-            Y ENVIO DE DATOS A JS
-
-            """
-        
- 
         else:
              # NO implementado, se obtiene por defecto 0,1.
 
             try:
-                get_data("p",texto_acelerometro,2)
+                l = get_data("p", texto_acelerometro, 2)
+                l = l.split(",")
+
+                """
+                Alertas aun no implementadas para el pulsioximetro
+                Fallo del modulo
+                """
+                if(float(l[6]) < 66):
+                    alerta(l, texto_pulsioximetro)
+                time.sleep(1)
             except:
                 arduino.close()
                 texto_pulsioximetro.close()
                 texto_acelerometro.close()
-                raise ValueError("Leyendo datos incorrectos en pulsioximetro")
+                raise ValueError("Error en pulsioximetro")
 
-            """
-            
-            SISTEMA DE ALERTA
-            Y ENVIO DE DATOS A JS
-
-            """
 
             k = time.perf_counter()
     else:
