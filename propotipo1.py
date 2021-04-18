@@ -21,10 +21,16 @@ def main():
             """
 
             try:
+                """
+                Obtencion de datos, pasado a lista.
+                """
                 l = get_data("a", texto_acelerometro, 6)
                 l = l.split(",")
                 print(l)
                 
+                """
+                SISTEMA DE ALERTA
+                """
                 if(float(l[6]) < -6):
                     alerta(l, texto_acelerometro)
                 time.sleep(1)
@@ -41,6 +47,10 @@ def main():
                 l = get_data("p", texto_acelerometro, 2)
                 l = l.split(",")
 
+                """
+                Alertas aun no implementadas para el pulsioximetro
+                Fallo del modulo
+                """
                 if(float(l[6]) < 66):
                     alerta(l, texto_pulsioximetro)
                 time.sleep(1)
