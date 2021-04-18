@@ -46,9 +46,14 @@ def connect_to_data_base():
 
 def data_base_send_data(data: str) -> None:
     """
-    Sends the given data 
+    Sends given data with the current hour.
     """
     assert type(data) == str, f"The type of data must be of the class str, got \
                                 {type(data)}"
+    
     # TODO: implement sql sentence
 
+
+def data_base_send_acelerometer():
+    #TODO
+    pass
