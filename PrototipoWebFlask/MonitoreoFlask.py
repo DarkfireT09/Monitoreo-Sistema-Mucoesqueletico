@@ -8,14 +8,14 @@ import psycopg2
 
 # Conexion con la base de datos
 try:
-    conexion = psycopg2.connect(host='127.0.0.1', port='5432', dbname='Cornerstone',
+    connection = psycopg2.connect(host='127.0.0.1', port='5432', dbname='Cornerstone',
                                 user='postgres', password='1234')
     print("Conexion con la base de datos exitosa!")
 except:
     print("La conexion con la base de datos ha fallado.")
     cursor.close()
-    conexion.close()
-cursor = conexion.cursor()
+    connection.close()
+cursor = connection.cursor()
 
 app = Flask(__name__)
 
@@ -29,16 +29,20 @@ def index():
 
 @app.route('/user_data')
 def user_data():
-    cursor.execute(
-        """
-        SELECT * FROM public.persons
-        ORDER BY id ASC 
-        """
-    )
-    rows = cursor.fetchall()
-    for row in rows:
-        print("Yahoo: ", row)
-    return render_template('DatosUsuario.html')
+    try:
+        cursor.execute(
+            """
+            SELECT *FROM "Usuario"
+            WHERE "Correo" = 'david.melendez@urosario.edu.co'
+            """
+        )
+        rows = cursor.fetchall()
+    except:
+        print("No username Found")
+    
+    nombre = rows[0][1]
+    apellido = rows[0][2]
+    return render_template('DatosUsuario.html', NOMBRE = nombre, APELLIDO = apellido)
 
 
 @app.route('/historial')
@@ -48,11 +52,33 @@ def historial():
 
 @app.route('/informacion')
 def informacion():
+    cursor.execute(
+        """
+        SELECT * FROM public.persons
+        ORDER BY id ASC 
+        """
+    )
     return render_template('Informacion.html')
 
 
 @app.route('/reporte_act')
 def reporte_act():
+    try:
+        #INSERT INTO "Usuario" (Correo, Nombre, Apellido, edad, peso, estatura, contraseña)
+        cursor.execute(
+        """
+        INSERT INTO "Genero" ("Id", "Nombre")
+        VALUES (1, 'Masculino')
+        """
+        )
+        connection.commit()
+        print("Genero insertado!")
+        
+    except:
+        print("El Genero no pudo ser insertado!")
+        connection.rollback()
+
+    
     return render_template('ReporteActividad.html')
 
 
