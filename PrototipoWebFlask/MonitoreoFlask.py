@@ -5,21 +5,26 @@ Code of the controller for the web app.
 from flask import Flask, render_template, request, url_for
 import sqlalchemy
 import psycopg2
+import Functions.Notifications 
+import time
 
 # Conexion con la base de datos
 try:
     connection = psycopg2.connect(host='127.0.0.1', port='5432', dbname='Cornerstone',
-                                user='postgres', password='1234')
+                                  user='postgres', password='1234')
     print("Conexion con la base de datos exitosa!")
 except:
-    print("La conexion con la base de datos ha fallado.")
-    cursor.close()
-    connection.close()
-cursor = connection.cursor()
+    raise NameError("La conexion con la base de datos ha fallado.")
 
+
+cursor = connection.cursor()
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:5432@localhost/Cornerstone'
+
+# Notifiaciones
+
+# Asignar el numero de notifcaciones
+Functions.Notifications.numero_de_notificaciones = Functions.Notifications.get_number_of_notifications(cursor)
 
 
 @app.route('/')
@@ -32,17 +37,18 @@ def user_data():
     try:
         cursor.execute(
             """
-            SELECT *FROM "Usuario"
-            WHERE "Correo" = 'david.melendez@urosario.edu.co'
+            SELECT * FROM "Usuario"
+		    WHERE "Correo" = 'david.melendez@urosario.edu.co'
             """
         )
         rows = cursor.fetchall()
     except:
         print("No username Found")
-    
+
     nombre = rows[0][1]
     apellido = rows[0][2]
-    return render_template('DatosUsuario.html', NOMBRE = nombre, APELLIDO = apellido)
+    print(rows)
+    return render_template('DatosUsuario.html', NOMBRE=nombre, APELLIDO=apellido)
 
 
 @app.route('/historial')
@@ -52,38 +58,40 @@ def historial():
 
 @app.route('/informacion')
 def informacion():
-    cursor.execute(
-        """
-        SELECT * FROM public.persons
-        ORDER BY id ASC 
-        """
-    )
     return render_template('Informacion.html')
 
 
 @app.route('/reporte_act')
 def reporte_act():
     try:
-        #INSERT INTO "Usuario" (Correo, Nombre, Apellido, edad, peso, estatura, contraseña)
+        # INSERT INTO "Usuario" (Correo, Nombre, Apellido, edad, peso, estatura, contraseña)
         cursor.execute(
-        """
-        INSERT INTO "Genero" ("Id", "Nombre")
-        VALUES (1, 'Masculino')
+            """
         """
         )
         connection.commit()
-        print("Genero insertado!")
-        
+
     except:
-        print("El Genero no pudo ser insertado!")
         connection.rollback()
 
-    
     return render_template('ReporteActividad.html')
 
 
 @app.route('/reporte_cadc')
 def reporte_cadc():
+
+    try:
+        cursor.execute(
+            """
+            SELECT count(*) 
+                FROM "Notificaciones"
+            """
+        )
+        rows = cursor.fetchall()
+    except:
+        print("No username Found")
+
+    print("The number of Yoda is of report cadc", rows)
     return render_template('ReporteCardiaco.html')
 
 
