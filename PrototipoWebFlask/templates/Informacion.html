@@ -1,76 +1,15 @@
-{% extends 'base2.html' %}
+{% extends 'chart_test.html' %}
 
-{% block head %}
-
-<head>
-	<style type="text/css">
-		body {
-			color: black;
-			background-color: white;
-			font-family: "Segoe UI";
-		}
-
-		#menu {
-			background-color: rgb(0, 102, 153);
-			position: absolute;
-			top: 72px;
-			left: 0;
-			width: 300px;
-			height: 590px;
-		}
-
-		#usuario {
-			background-color: rgb(0, 51, 102);
-			color: white;
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 300px;
-			height: 72px;
-		}
-
-		#titulo {
-			background-color: rgb(0, 102, 153);
-			position: absolute;
-			top: 0;
-			left: 300px;
-			width: 1047px;
-		}
-
-		#info {
-			background-color: white;
-			position: absolute;
-			top: 80px;
-			left: 310px;
-		}
-	</style>
-</head>
+{% block informacion %}
+           <a class="nav-link active" href="/Informacion">
+              <span data-feather="home"></span>
+              Informacion Dispositivo <span class="sr-only">(current)</span>
+            </a>
 {% endblock %}
 
-{% block body %}
 
-<body>
-	<div id="titulo">
-		<h2 style="text-align:center;">INFORMACIÓN DEL DISPOSITIVO</h2>
-	</div>
-
-	<div id="usuario">
-		<p style="text-align:center;">Nombre de Usuario</p>
-	</div>
-
-	<div id="menu">
-		<h4 style="text-align:center;">MENU PRINCIPAL</h4>
-		<ul>
-			<li><a href="{{ url_for('index') }}">Inicio</a></li>
-			<li><a href="{{ url_for('user_data') }}">Datos del Usuario</a></li>
-			<li><a href="{{ url_for('reporte_act') }}">Reporte Actividad Física</a></li>
-			<li><a href="{{ url_for('reporte_cadc') }}">Reporte Ritmo Cardiaco</a></li>
-			<li><a href="{{ url_for('reporte_ox') }}">Reporte Nivel de Oxígeno</a></li>
-			<li><a href="{{ url_for('historial') }}">Historial</a></li>
-		</ul>
-	</div>
-
-	<div id=info>
+{% block content %}
+    <div id=info>
 		<p>Este prototipo fue desarrollado por Ana Garzón, Camilo Fernández, Daniel Leyva, Gabriela Linares, Guillermo
 			Rivero, Santiago Linares, Winston Pernett y David Alejandro Meléndez
 			estudiantes del pregrado de <strong>Matemáticas Aplicadas y Ciencias de la Computación en La Universidad del
@@ -94,6 +33,4 @@
 			https://github.com/DarkfireT09/Monitoreo-Sistema-Muscoloesqueletico </p>
 	</div>
 
-
-</body>
 {% endblock %}

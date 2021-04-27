@@ -1,0 +1,11 @@
+{% extends 'chart_test.html' %}
+{% block cardiaco %}
+           <a class="nav-link active" href="/ReporteCardiaco">
+              <span data-feather="home"></span>
+              Reporte Ritmo Cardiaco- Saturacion oxigeno <span class="sr-only">(current)</span>
+            </a>
+{% endblock %}
+
+        {% block content %}
+ <canvas id="line-chart" width="900" height="380"></canvas>
+        {% endblock%}
