@@ -5,8 +5,9 @@ Code of the controller for the web app.
 from flask import Flask, render_template, request, url_for
 import sqlalchemy
 import psycopg2
-import Functions.Notifications
+import Modules.Notifications
 import time
+import Modules.global_variables
 
 # Conexion con la base de datos
 try:
@@ -23,17 +24,13 @@ cursor = connection.cursor()
 app = Flask(__name__)
 
 
-def saludar():
-    print("un saludo!")
-
 # Notifiaciones
 
-
 # Asignar el numero de notifcaciones
-Functions.Notifications.numero_notificaciones_actuales = \
-    Functions.Notifications.get_number_of_notifications(cursor)
+Modules.global_variables.numero_notificaciones_actuales = \
+    Modules.Notifications.get_number_of_notifications(cursor)
 
-Functions.Notifications.manage_notifications(cursor, Functions.Notifications.numero_notificaciones_actuales)
+Modules.Notifications.manage_notifications(cursor)
 
 
 @app.route('/')
@@ -110,3 +107,4 @@ def reporte_ox():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
