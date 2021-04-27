@@ -5,13 +5,15 @@ Code of the controller for the web app.
 from flask import Flask, render_template, request, url_for
 import sqlalchemy
 import psycopg2
-import Functions.Notifications 
+import Functions.Notifications
 import time
 
 # Conexion con la base de datos
 try:
-    connection = psycopg2.connect(host='127.0.0.1', port='5432', dbname='Cornerstone',
-                                  user='postgres', password='1234')
+    connection = psycopg2.connect(host='127.0.0.1', port='5432',
+                                  dbname='Cornerstone', user='postgres',
+                                  password='1234')
+
     print("Conexion con la base de datos exitosa!")
 except:
     raise NameError("La conexion con la base de datos ha fallado.")
@@ -21,10 +23,17 @@ cursor = connection.cursor()
 app = Flask(__name__)
 
 
+def saludar():
+    print("un saludo!")
+
 # Notifiaciones
 
+
 # Asignar el numero de notifcaciones
-Functions.Notifications.numero_de_notificaciones = Functions.Notifications.get_number_of_notifications(cursor)
+Functions.Notifications.numero_notificaciones_actuales = \
+    Functions.Notifications.get_number_of_notifications(cursor)
+
+Functions.Notifications.manage_notifications(cursor, Functions.Notifications.numero_notificaciones_actuales)
 
 
 @app.route('/')
@@ -91,7 +100,6 @@ def reporte_cadc():
     except:
         print("No username Found")
 
-    print("The number of Yoda is of report cadc", rows)
     return render_template('ReporteCardiaco.html')
 
 
