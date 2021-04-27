@@ -1,6 +1,3 @@
-"""
-Code of the controller for the web app.
-"""
 
 from flask import Flask, render_template, request, url_for
 import sqlalchemy
@@ -24,14 +21,13 @@ cursor = connection.cursor()
 app = Flask(__name__)
 
 
-# Notifiaciones
+# Notificaciones
 
 # Asignar el numero de notifcaciones
 Modules.global_variables.numero_notificaciones_actuales = \
     Modules.Notifications.get_number_of_notifications(cursor)
 
 Modules.Notifications.manage_notifications(cursor)
-
 
 @app.route('/')
 def index():
@@ -54,20 +50,21 @@ def user_data():
     nombre = rows[0][1]
     apellido = rows[0][2]
     print(rows)
-    return render_template('DatosUsuario.html', NOMBRE=nombre, APELLIDO=apellido)
+    return render_template('DatosUsuario.html', NOMBRE=nombre, APELLIDO=apellido) #Modificar DatosUsuario
+                                                                            #para agregar Nombre y apellido
 
 
-@app.route('/historial')
-def historial():
-    return render_template('Historial.html')
+# @app.route('/historial')
+# def historial():
+#     return render_template('Historial.html')
 
 
-@app.route('/informacion')
+@app.route('/Informacion')
 def informacion():
     return render_template('Informacion.html')
 
 
-@app.route('/reporte_act')
+@app.route('/ReporteActividad')
 def reporte_act():
     try:
         # INSERT INTO "Usuario" (Correo, Nombre, Apellido, edad, peso, estatura, contraseña)
@@ -83,13 +80,13 @@ def reporte_act():
     return render_template('ReporteActividad.html')
 
 
-@app.route('/reporte_cadc')
+@app.route('/ReporteCardiaco')
 def reporte_cadc():
 
     try:
         cursor.execute(
             """
-            SELECT count(*) 
+            SELECT count(*)
                 FROM "Notificaciones"
             """
         )
@@ -97,14 +94,12 @@ def reporte_cadc():
     except:
         print("No username Found")
 
-    return render_template('ReporteCardiaco.html')
+    return render_template('pulso_oxigeno.html')
 
-
-@app.route('/reporte_ox')
-def reporte_ox():
-    return render_template('ReporteOxigeno.html')
-
+@app.route('/graphics')
+def graphic():
+    return render_template('line-chart.js')
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
+
