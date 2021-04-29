@@ -100,3 +100,8 @@ def manage_notifications(cursor) -> None:
     # El thread debe ser daemon
     thread.daemon = True
     thread.start()
+
+"""
+insert into "Notificaciones" (fecha, mensaje, "Correo_Usuario")
+Values (current_timestamp, 'Test 4', 'david.melendez@urosario.edu.co')"
+"""
