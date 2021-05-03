@@ -4,7 +4,7 @@ import psycopg2
 # ----------------------Conexion con arduino -------------------
 
 try:
-    arduino = serial.Serial('COM7', 57600, timeout=1)
+    arduino = serial.Serial('COM9', 9600, timeout=1)
 except:
     raise ValueError("Dispositivo no en linea")
     # send_to_JS("consol.error('dipositivo no esta en linea')")
@@ -28,7 +28,7 @@ def get_data(sensor, archivo, n):
     if len(i.split(',')) == n:
         archivo.write(t + ',' + str(i) + '\n')
         return t + ',' + str(i) + '\n'
-    return t + ",0,0,0,0,0,0" + "\n"
+    return t + ",0,0,0,0,0,1" + "\n"
 
 def alerta(l, archivo):
     cont = 0
