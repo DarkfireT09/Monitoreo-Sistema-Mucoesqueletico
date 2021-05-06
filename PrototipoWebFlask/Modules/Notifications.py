@@ -6,7 +6,8 @@ de la app
 from threading import Thread
 import time
 import Modules.global_variables
-
+from spontit import SpontitResource
+import requests
 
 def get_number_of_notifications(cursor) -> int:
     """
@@ -81,14 +82,23 @@ def manage_notifications(cursor) -> None:
     """
 
     def manage_notifications_helper(cursor):
-
         it = 0
+        resource = SpontitResource("winston_pernett2311", "AIF6X94KCA5W01LGQ3YLBDG0VZGHOOAG7Y8SVLEU3ZY3N1H06XDGNJEA7R1QDHOL8V1G8LVVBFKRZ12OR9NPOVHCH5HS565RKSTZ")
         while True:
             # Si una nueva fila en la tabla 'Notificaciones' es detectada
             # Mandar una notificacion push
             if (update_if_new_notification(cursor)):
                 print("Insercion en la base de datos, activando notificacion!")
-                # Todo activar notificacion s
+                cursor.execute(
+                    """
+                    SELECT mensaje
+                        FROM "Notificaciones"
+                        ORDER BY fecha desc
+                    """
+                )
+                data = cursor.fetchall()
+                print(data[0][0])
+                r = requests.post("http://127.0.0.1:5000/update_notification", data=data[0][0])
             print("it ", it)
             it += 1
             time.sleep(1)

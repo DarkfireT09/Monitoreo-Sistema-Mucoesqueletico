@@ -1,9 +1,9 @@
 
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, jsonify
 import sqlalchemy
 import psycopg2
 import Modules.Notifications
-import time
+import datetime
 import Modules.global_variables
 
 # Conexion con la base de datos
@@ -20,6 +20,20 @@ except:
 cursor = connection.cursor()
 app = Flask(__name__)
 
+try:
+    cursor.execute(
+        """
+        SELECT * FROM "Usuario"
+        WHERE "Correo" = 'david.melendez@urosario.edu.co'
+        """
+    )
+    rows = cursor.fetchall()
+except:
+    print("No username Found")
+
+nombre = rows[0][1]
+apellido = rows[0][2]
+print(rows)
 
 # Notificaciones
 
@@ -29,27 +43,17 @@ Modules.global_variables.numero_notificaciones_actuales = \
 
 Modules.Notifications.manage_notifications(cursor)
 
+
+
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+
+    return render_template('index.html', NOMBRE=nombre, APELLIDO=apellido)
 
 
 @app.route('/user_data')
 def user_data():
-    try:
-        cursor.execute(
-            """
-            SELECT * FROM "Usuario"
-		    WHERE "Correo" = 'david.melendez@urosario.edu.co'
-            """
-        )
-        rows = cursor.fetchall()
-    except:
-        print("No username Found")
-
-    nombre = rows[0][1]
-    apellido = rows[0][2]
-    print(rows)
     return render_template('DatosUsuario.html', NOMBRE=nombre, APELLIDO=apellido) #Modificar DatosUsuario
                                                                             #para agregar Nombre y apellido
 
@@ -100,6 +104,36 @@ def reporte_cadc():
 def graphic():
     return render_template('line-chart.js')
 
+@app.route('/notification.js')
+def notific():
+    return render_template('notification.js')
+
+@app.route('/update_notification', methods=['POST'])
+def data_notific():
+    data = request.get_json()
+    return jsonify(data)
+
+# @app.route('/update_data', methods=['POST'])
+# def update_notif():
+#     try:
+#         cursor.execute(
+#             """
+#             SELECT pulso,fecha
+#                 FROM "Pulsioximetro"
+#                 ORDER BY fecha desc
+#             """
+#         )
+#         rows = cursor.fetchall()
+#     except:
+#         print("No data found")
+#
+#     pulso = rows[0][0]
+#     fecha = rows[0][1]
+#     print(type(fecha))
+#     return jsonify({
+#         'pulso': pulso,
+#         'fecha': fecha.strftime("%A:%H:%M:%S")
+#     })
 if __name__ == "__main__":
     app.run(debug=True)
 
