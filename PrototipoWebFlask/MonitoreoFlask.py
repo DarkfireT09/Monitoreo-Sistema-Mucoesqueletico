@@ -23,8 +23,8 @@ app = Flask(__name__)
 try:
     cursor.execute(
         """
-        SELECT * FROM "Usuario"
-        WHERE "Correo" = 'david.melendez@urosario.edu.co'
+        SELECT * FROM Usuario
+        WHERE Correo = 'david.melendez@urosario.edu.co'
         """
     )
     rows = cursor.fetchall()
@@ -108,32 +108,31 @@ def graphic():
 def notific():
     return render_template('notification.js')
 
-@app.route('/update_notification', methods=['POST'])
-def data_notific():
-    data = request.get_json()
-    return jsonify(data)
+# @app.route('/update_notification', methods=['POST'])
+# def data_notific():
+#     data = request.get_json()
+#     return jsonify(data)
 
-# @app.route('/update_data', methods=['POST'])
-# def update_notif():
-#     try:
-#         cursor.execute(
-#             """
-#             SELECT pulso,fecha
-#                 FROM "Pulsioximetro"
-#                 ORDER BY fecha desc
-#             """
-#         )
-#         rows = cursor.fetchall()
-#     except:
-#         print("No data found")
-#
-#     pulso = rows[0][0]
-#     fecha = rows[0][1]
-#     print(type(fecha))
-#     return jsonify({
-#         'pulso': pulso,
-#         'fecha': fecha.strftime("%A:%H:%M:%S")
-#     })
+@app.route('/update_data', methods=['POST'])
+def update_notif():
+    try:
+        cursor.execute(
+            """
+            SELECT pulso,fecha
+                FROM pulsometro
+                ORDER BY fecha desc
+            """
+        )
+        rows = cursor.fetchall()
+    except:
+        print("No data found")
+
+    pulso = rows[0][0]
+    fecha = rows[0][1]
+    return jsonify({
+        'pulso': pulso,
+        'fecha': fecha.strftime("%A:%H:%M:%S")
+    })
 if __name__ == "__main__":
     app.run(debug=True)
 

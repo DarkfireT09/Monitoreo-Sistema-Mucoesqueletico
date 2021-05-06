@@ -26,7 +26,7 @@ def get_number_of_notifications(cursor) -> int:
         cursor.execute(
             """
             SELECT count(*) 
-            FROM "Notificaciones"
+            FROM Notificaciones
             """
         )
         rows = cursor.fetchall()
@@ -92,7 +92,7 @@ def manage_notifications(cursor) -> None:
                 cursor.execute(
                     """
                     SELECT mensaje
-                        FROM "Notificaciones"
+                        FROM Notificaciones
                         ORDER BY fecha desc
                     """
                 )
@@ -112,6 +112,6 @@ def manage_notifications(cursor) -> None:
     thread.start()
 
 """
-insert into "Notificaciones" (fecha, mensaje, "Correo_Usuario")
+insert into Notificaciones (fecha, mensaje, Correo_Usuario)
 Values (current_timestamp, 'Test 4', 'david.melendez@urosario.edu.co')"
 """
