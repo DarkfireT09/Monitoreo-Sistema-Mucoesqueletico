@@ -57,8 +57,12 @@ def alerta(l, archivo):
 
 def connect_to_data_base():
     """
-    Connects to a 'local' postgreSQL database.
-    Returns an exception if the connection failed.
+    Se conecta a una base de datos postresql.
+
+    Input:
+        None
+    Output:
+        (psycopg2 connection) conexion: Conexion con la base de datos
     """
     
     try:
@@ -67,6 +71,7 @@ def connect_to_data_base():
         print("Conexion con la base de datos exitosa!")
     except:
         raise Exception("Connection with the database failed")
+    return conexion
 
 
 def data_base_send_data(data: str) -> None:
