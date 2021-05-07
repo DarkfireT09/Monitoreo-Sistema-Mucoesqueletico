@@ -75,7 +75,7 @@ def manage_notifications(cursor) -> None:
     Implementa un helper para llamaro con mediante los threads.
 
     Input:
-        cursor (psycopg2.connect.cursor()): cursor conectado a la base de datos
+        cursor (psycopg2 connection): cursor conectado a la base de datos
 
     Output:
         None

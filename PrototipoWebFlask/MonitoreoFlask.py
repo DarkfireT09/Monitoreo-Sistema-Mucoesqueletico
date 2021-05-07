@@ -92,17 +92,6 @@ def informacion():
 
 @app.route('/ReporteActividad')
 def reporte_act():
-    try:
-        # INSERT INTO "Usuario" (Correo, Nombre, Apellido, edad, peso, estatura, contraseña)
-        cursor.execute(
-            """
-        """
-        )
-        connection.commit()
-
-    except:
-        connection.rollback()
-
     return render_template('ReporteActividad.html')
 
 
@@ -141,8 +130,8 @@ def update_notif():
         cursor.execute(
             """
             SELECT pulso, fecha
-                FROM pulsometro
-                ORDER BY fecha desc
+            FROM pulsometro
+            ORDER BY fecha desc
             """
         )
         rows = cursor.fetchall()
