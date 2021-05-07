@@ -62,7 +62,7 @@ def connect_to_data_base():
     Input:
         None
     Output:
-        (psycopg2 connection) conexion: Conexion con la base de datos
+        conexion (psycopg2 connection): Conexion con la base de datos
     """
     
     try:
@@ -74,14 +74,30 @@ def connect_to_data_base():
     return conexion
 
 
-def data_base_send_data(data: str) -> None:
+def data_base_send_notificacion(conexion, mensaje: str, correo_usuario: str) -> None:
     """
-    Sends given data with the current hour.
-    """
-    assert type(data) == str, f"The type of data must be of the class str, got \
-                                {type(data)}"
+    Inserta en la tabla notificaciones una fila indicando que una notificacion
+    debe ser creada. La hora en la que se inserta es generada por la propia base 
+    de datos.
+    Input:
+        conexion (psycopg2 connection): Conexion con la base de datos
+        mensaje (str): mensaje que tendrá la notificación
+        
     
-    # TODO: implement sql sentence
+    """
+    cursor = conexion.cursor()
+
+    try:
+        sql_sentence = """
+            INSERT INTO notificaciones (fecha, mensaje, correo_usuario)
+            VALUES (now()::timestamp, '{}', '{}')
+            """.format(mensaje, correo_usuario)
+        cursor.execute(sql_sentence)
+        connection.commit()
+    except Exception as e:
+        connection.rollback()
+        print("No username Found")
+
 
 
 def data_base_send_acelerometer():
