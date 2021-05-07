@@ -9,6 +9,7 @@ import Modules.global_variables
 from spontit import SpontitResource
 import requests
 
+
 def get_number_of_notifications(cursor) -> int:
     """
     Obtiene el numero de notificaciones (numero de filas) en la tabla 
@@ -83,7 +84,8 @@ def manage_notifications(cursor) -> None:
 
     def manage_notifications_helper(cursor):
         it = 0
-        resource = SpontitResource("david_melendez9417", "16T6GULKQWW93W0LILUB7L8HL16QC207LSIYJQP4RJQ1GKZZ1UB2OCEL0629772A7BBKEJKO9ZOUD2QHN4PAYN09CK67MBAWG17H")
+        resource = SpontitResource(
+            "david_melendez9417", "16T6GULKQWW93W0LILUB7L8HL16QC207LSIYJQP4RJQ1GKZZ1UB2OCEL0629772A7BBKEJKO9ZOUD2QHN4PAYN09CK67MBAWG17H")
         while True:
             # Si una nueva fila en la tabla 'Notificaciones' es detectada
             # Mandar una notificacion push
@@ -110,6 +112,7 @@ def manage_notifications(cursor) -> None:
     # El thread debe ser daemon
     thread.daemon = True
     thread.start()
+
 
 """
 insert into Notificaciones (fecha, mensaje, Correo_Usuario)
