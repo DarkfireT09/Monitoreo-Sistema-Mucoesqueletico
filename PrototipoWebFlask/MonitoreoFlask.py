@@ -19,8 +19,8 @@ except:
 # Conexion con la base de datos
 try:
     notification_connection = psycopg2.connect(host='127.0.0.1', port='5432',
-                                  dbname='Cornerstone', user='postgres',
-                                  password='1234')
+                                               dbname='Cornerstone', user='postgres',
+                                               password='1234')
 
     print("Conexion con la base de datos exitosa!")
 except:
@@ -62,11 +62,10 @@ except Exception as e:
 
 # Asignar el numero de notifcaciones
 Modules.global_variables.numero_notificaciones_actuales = \
-    Modules.Notifications.get_number_of_notifications(notification_connection.cursor())
+    Modules.Notifications.get_number_of_notifications(
+        notification_connection.cursor())
 
 Modules.Notifications.manage_notifications(notification_cursor)
-
-
 
 
 @app.route('/')
@@ -76,8 +75,9 @@ def index():
 
 @app.route('/user_data')
 def user_data():
-    return render_template('DatosUsuario.html', NOMBRE=nombre, APELLIDO=apellido) #Modificar DatosUsuario
-                                                                            #para agregar Nombre y apellido
+    # Modificar DatosUsuario
+    return render_template('DatosUsuario.html', NOMBRE=nombre, APELLIDO=apellido)
+    # para agregar Nombre y apellido
 
 
 # @app.route('/historial')
@@ -111,18 +111,16 @@ def reporte_cadc():
 
     return render_template('pulso_oxigeno.html')
 
+
 @app.route('/graphics')
 def graphic():
     return render_template('line-chart.js')
+
 
 @app.route('/notification.js')
 def notific():
     return render_template('notification.js')
 
-# @app.route('/update_notification', methods=['POST'])
-# def data_notific():
-#     data = request.get_json()
-#     return jsonify(data)
 
 @app.route('/update_data', methods=['POST'])
 def update_notif():
@@ -149,4 +147,3 @@ def update_notif():
 if __name__ == "__main__":
     app.run(debug=True)
     pass
-

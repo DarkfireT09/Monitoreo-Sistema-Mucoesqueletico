@@ -83,7 +83,8 @@ def data_base_send_notificacion(conexion, mensaje: str, correo_usuario: str) -> 
         conexion (psycopg2 connection): Conexion con la base de datos
         mensaje (str): mensaje que tendrá la notificación
         
-    
+    Output:
+        None
     """
     cursor = conexion.cursor()
 
@@ -98,8 +99,30 @@ def data_base_send_notificacion(conexion, mensaje: str, correo_usuario: str) -> 
         connection.rollback()
         print("No username Found")
 
+    
+def data_base_send_acelerometer(conexion, gx: str, gy: str, gz: str, correo_usuario: str) -> None:
+    """
+    Inserta en la tabla acelerometro
+
+    Input:
+        conexion (psycopg2 connection): Conexion con la base de datos
+        mensaje (str): mensaje que tendrá la notificación
+        
+    Output:
+        None
+    """
+    cursor = conexion.cursor()
+
+    try:
+        sql_sentence = """
+            INSERT INTO acelerometro (fecha, gx, gy, gz, correo_usuario)
+            VALUES (now()::timestamp, 1, 2, 3, 'david.melendez@urosario.edu.co')
+            """.format(gx, gy, gz, correo_usuario)
+        cursor.execute(sql_sentence)
+        connection.commit()
+    except Exception as e:
+        connection.rollback()
+        print("No username Found")
 
 
-def data_base_send_acelerometer():
-    #TODO
-    pass
+#def data_send_pulsometer():
