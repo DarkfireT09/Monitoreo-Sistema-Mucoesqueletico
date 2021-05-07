@@ -106,7 +106,10 @@ def data_base_send_acelerometer(conexion, gx: str, gy: str, gz: str, correo_usua
 
     Input:
         conexion (psycopg2 connection): Conexion con la base de datos
-        mensaje (str): mensaje que tendrá la notificación
+        gx (float): posicion en x
+        gy (float): posicion en y
+        gz (float): posicion en z
+        correo_usuario (str): correo del usuario actual
         
     Output:
         None
@@ -122,7 +125,30 @@ def data_base_send_acelerometer(conexion, gx: str, gy: str, gz: str, correo_usua
         connection.commit()
     except Exception as e:
         connection.rollback()
-        print("No username Found")
+        print("data_base_send_acelerometer Error: No se pudo mandar ")
 
 
-#def data_send_pulsometer():
+def data_send_pulsometer(conexion, pulso: float, correo_usuario: str):
+    """
+    Inserta en la tabla pulsometro
+
+    Input:
+        conexion (psycopg2 connection): Conexion con la base de datos
+        pulso (float): Pulso actual
+        correo_usuario (str): correo del usuario actual
+        
+    Output:
+        None
+    """
+    cursor = conexion.cursor()
+
+    try:
+        sql_sentence = """
+            INSERT INTO pulsometro (fecha, pulso, correo_usuario)
+            VALUES (now()::timestamp, {}, {})
+            """.format(pulso, correo_usuario)
+        cursor.execute(sql_sentence)
+        connection.commit()
+    except Exception as e:
+        connection.rollback()
+        print("data_send_pulsometer Error: No se pudo mandar ")
