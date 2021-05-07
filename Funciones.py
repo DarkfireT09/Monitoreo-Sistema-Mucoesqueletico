@@ -119,14 +119,13 @@ def data_base_send_acelerometer(conexion, gx: str, gy: str, gz: str, correo_usua
     try:
         sql_sentence = """
             INSERT INTO acelerometro (fecha, gx, gy, gz, correo_usuario)
-            VALUES (now()::timestamp, 1, 2, 3, 'david.melendez@urosario.edu.co')
+            VALUES (now()::timestamp, {}, {}, {}, '{}')
             """.format(gx, gy, gz, correo_usuario)
         cursor.execute(sql_sentence)
         connection.commit()
     except Exception as e:
         connection.rollback()
         print("data_base_send_acelerometer Error: No se pudo mandar ")
-
 
 def data_send_pulsometer(conexion, pulso: float, correo_usuario: str):
     """
@@ -141,14 +140,14 @@ def data_send_pulsometer(conexion, pulso: float, correo_usuario: str):
         None
     """
     cursor = conexion.cursor()
-
     try:
         sql_sentence = """
             INSERT INTO pulsometro (fecha, pulso, correo_usuario)
-            VALUES (now()::timestamp, {}, {})
+            VALUES (now()::timestamp, '{}', '{}')
             """.format(pulso, correo_usuario)
         cursor.execute(sql_sentence)
         connection.commit()
     except Exception as e:
+        print(e)
         connection.rollback()
         print("data_send_pulsometer Error: No se pudo mandar ")

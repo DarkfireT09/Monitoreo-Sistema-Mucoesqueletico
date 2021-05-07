@@ -6,6 +6,7 @@ import Modules.Notifications
 import datetime
 import Modules.global_variables
 
+
 # Conexion con la base de datos
 try:
     connection = psycopg2.connect(host='127.0.0.1', port='5432',
@@ -92,6 +93,7 @@ def informacion():
 
 @app.route('/ReporteActividad')
 def reporte_act():
+    data_base_send_acelerometer(connection,  23.3,  23.3,  23.3, "david.melendez@urosario.edu.co") 
     return render_template('ReporteActividad.html')
 
 
@@ -134,14 +136,14 @@ def update_notif():
         )
         rows = cursor.fetchall()
     except:
-        print("No data found")
+        print("update_notif: No data found")
 
-        pulso = rows[0][0]
-        fecha = rows[0][1]
-        return jsonify({
-            'pulso': pulso,
-            'fecha': fecha.strftime("%A:%H:%M:%S")
-        })
+    pulso = rows[0][0]
+    fecha = rows[0][1]
+    return jsonify({
+        'pulso': pulso,
+        'fecha': fecha.strftime("%A:%H:%M:%S")
+    })
 
 
 if __name__ == "__main__":
