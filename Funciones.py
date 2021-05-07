@@ -30,10 +30,11 @@ def get_data(sensor, archivo, n):
         return t + ',' + str(i) + '\n'
     return t + ",0,0,0,0,0,1" + "\n"
 
+
 def alerta(l, archivo):
     cont = 0
     while (float(l[6]) < -6):
-        cont +=1
+        cont += 1
         time.sleep(1)
         if cont == 3:
             break
@@ -44,16 +45,17 @@ def alerta(l, archivo):
         arduino.write("v".encode())
         while True:
             cont = 0
-            print ("alerta")
+            print("alerta")
             i = arduino.readline()
             i = i.decode()
             try:
                 i = int(i)
                 print("exito")
-            except :
+            except:
                 pass
             if i == 1:
                 break
+
 
 def connect_to_data_base():
     """
@@ -64,10 +66,10 @@ def connect_to_data_base():
     Output:
         conexion (psycopg2 connection): Conexion con la base de datos
     """
-    
+
     try:
         conexion = psycopg2.connect(host='127.0.0.1', port='5432', dbname='Cornerstone',
-                                user='postgres', password='1234')
+                                    user='postgres', password='1234')
         print("Conexion con la base de datos exitosa!")
     except:
         raise Exception("Connection with the database failed")
@@ -82,7 +84,7 @@ def data_base_send_notificacion(conexion, mensaje: str, correo_usuario: str) -> 
     Input:
         conexion (psycopg2 connection): Conexion con la base de datos
         mensaje (str): mensaje que tendrá la notificación
-        
+
     Output:
         None
     """
@@ -99,7 +101,7 @@ def data_base_send_notificacion(conexion, mensaje: str, correo_usuario: str) -> 
         connection.rollback()
         print("No username Found")
 
-    
+
 def data_base_send_acelerometer(conexion, gx: str, gy: str, gz: str, correo_usuario: str) -> None:
     """
     Inserta en la tabla acelerometro
@@ -110,7 +112,7 @@ def data_base_send_acelerometer(conexion, gx: str, gy: str, gz: str, correo_usua
         gy (float): posicion en y
         gz (float): posicion en z
         correo_usuario (str): correo del usuario actual
-        
+
     Output:
         None
     """
@@ -127,6 +129,7 @@ def data_base_send_acelerometer(conexion, gx: str, gy: str, gz: str, correo_usua
         connection.rollback()
         print("data_base_send_acelerometer Error: No se pudo mandar ")
 
+
 def data_send_pulsometer(conexion, pulso: float, correo_usuario: str):
     """
     Inserta en la tabla pulsometro
@@ -135,7 +138,7 @@ def data_send_pulsometer(conexion, pulso: float, correo_usuario: str):
         conexion (psycopg2 connection): Conexion con la base de datos
         pulso (float): Pulso actual
         correo_usuario (str): correo del usuario actual
-        
+
     Output:
         None
     """

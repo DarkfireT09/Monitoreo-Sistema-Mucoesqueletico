@@ -93,7 +93,8 @@ def informacion():
 
 @app.route('/ReporteActividad')
 def reporte_act():
-    data_base_send_acelerometer(connection,  23.3,  23.3,  23.3, "david.melendez@urosario.edu.co") 
+    data_base_send_acelerometer(
+        connection,  23.3,  23.3,  23.3, "david.melendez@urosario.edu.co")
     return render_template('ReporteActividad.html')
 
 
