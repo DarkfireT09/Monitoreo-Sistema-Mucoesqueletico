@@ -112,4 +112,94 @@ REFERENCES public.Usuario (Correo) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
+--Añadir columnas necesarias para calcular el porcentaje de actividad física
+
+
+ALTER TABLE pulsometro ADD porcentaje_activdad NUMERIC NULL;
+
+ALTER TABLE usuario ADD ritmo_basal INT NULL;
+
+ALTER TABLE usuario ADD reserva NUMERIC NULL;
+
+--Añadir géneros en tabla género
+
+INSERT INTO genero VALUES(0, 'mujer');
+INSERT INTO genero VALUES(1, 'hombre');
+
+--TRIGGER FUNCTIONS
+
+DROP FUNCTION IF EXISTS RRC_mujer() CASCADE;
+
+CREATE OR REPLACE FUNCTION RRC_mujer()
+	RETURNS TRIGGER
+	AS 
+		$$ 
+		begin	
+			UPDATE usuario
+			SET reserva = (214-usuario.edad*0.8)-usuario.ritmo_basal
+			WHERE correo = NEW.correo AND id_genero = 0;
+			RETURN NEW;
+		end;
+		$$
+	LANGUAGE plpgsql;
+	
+CREATE TRIGGER RRC_mujer
+	AFTER INSERT
+	ON usuario
+	FOR EACH ROW
+	EXECUTE PROCEDURE RRC_mujer();
+
+DROP FUNCTION IF EXISTS RRC_hombre() CASCADE;
+
+CREATE OR REPLACE FUNCTION RRC_hombre()
+	RETURNS TRIGGER
+	AS 
+		$$ 
+		begin	
+			UPDATE usuario
+			SET reserva = (209-usuario.edad*0.7)-usuario.ritmo_basal
+			WHERE correo = NEW.correo AND id_genero = 1;
+			RETURN NEW;
+		end;
+		$$
+	LANGUAGE plpgsql;
+	
+CREATE TRIGGER RRC_hombre
+	AFTER INSERT
+	ON usuario
+	FOR EACH ROW
+	EXECUTE PROCEDURE RRC_hombre();
+
+DROP FUNCTION IF EXISTS karvonen() CASCADE;
+
+CREATE OR REPLACE FUNCTION karvonen()
+	RETURNS TRIGGER
+	AS 
+		$$
+		declare
+			basal integer;
+			rrc numeric;
+		begin	
+			SELECT ritmo_basal into basal
+			FROM usuario, pulsometro
+			WHERE pulso = NEW.pulso AND correo = correo_usuario;
+			
+			SELECT reserva into rrc
+			FROM usuario, pulsometro
+			WHERE pulso = NEW.pulso AND correo = correo_usuario;
+			
+			UPDATE pulsometro
+			SET porcentaje_activdad = (pulso - basal)/rrc
+			WHERE fecha = NEW.fecha;
+			RETURN NEW;
+		end;
+		$$
+	LANGUAGE plpgsql;
+	
+CREATE TRIGGER karvonen
+	AFTER INSERT
+	ON pulsometro
+	FOR EACH ROW
+	EXECUTE PROCEDURE karvonen();
+
 
