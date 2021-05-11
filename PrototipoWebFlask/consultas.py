@@ -1,12 +1,18 @@
-#Consultas necesarias para hacer las gráficas
+#Consultas necesarias para hacer las grÃ¡ficas
+
+#Consulta para datos de usuario
+def datos_usuario():
+    return """SELECT usuario.nombre, apellido, edad, peso, estatura, genero.nombre as genero, ritmo_basal, reserva
+                FROM usuario, genero 
+                WHERE usuario.id_genero = genero.id AND correo = 'ejemplo@ejemplo.com' """ #Correo del usuario que va a revisar sus datos
 
 #Consultas que van a aparecer en el resumen de datos:
 
 def avg_pulso():
-    return """SELECT AVG(pulso) FROM pulsometro""" #promedio de pulso cardiaco
+    return """SELECT AVG(pulso) FROM pulsometro """ #promedio de pulso cardiaco
 
 def avg_actividad():
-    return """SELECT AVG(porcentaje_activdad) FROM pulsometro""" #promedio de porcentaje de actividad física obtenida por el pulso cardiaco
+    return """SELECT AVG(porcentaje_activdad) FROM pulsometro""" #promedio de porcentaje de actividad fí­sica obtenida por el pulso cardiaco
 
 def num_alertas():
     return """SELECT COUNT(mensaje) FROM notificaciones"""
