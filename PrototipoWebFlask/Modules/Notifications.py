@@ -113,6 +113,37 @@ def manage_notifications(cursor) -> None:
     thread.daemon = True
     thread.start()
 
+def get_number_of_notifications_given_day(cursor, user, timestamp) -> int:
+    """
+    Obtiene el numero de notificaciones (numero de filas) en la tabla 
+    'notificaciones' en un dia especifico dado un usuario
+
+    Input:
+        cursor (psycopg2.connect.cursor()): cursor conectado a la base de datos
+        user (str): correo del usuario
+        timestamp
+
+    Output:
+        numero_de_notificaciones (int): numero de notificaciones/filas 
+                                        en la tabla
+    """
+
+    try:
+        cursor.execute(
+            """
+            SELECT count(*) 
+            FROM Notificaciones
+            WHERE correo_usuario = '{}' AND fecha = '{}'
+            """.format(user, timestamp)
+        )
+        rows = cursor.fetchall()
+    except:
+        raise NameError(
+            "El numero de notificaciones de un usuario no pudo ser extraido")
+
+    numero_de_notificaciones = rows[0][0]
+
+    return numero_de_notificaciones
 
 """
 insert into Notificaciones (fecha, mensaje, Correo_Usuario)
