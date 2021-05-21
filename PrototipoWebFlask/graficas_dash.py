@@ -1,3 +1,4 @@
+
 """
 This app creates a simple sidebar layout using inline style arguments and the
 dbc.Nav component.
@@ -108,17 +109,23 @@ dfCases = pd.DataFrame(query, columns=["fecha","pulso"])
 # Grafico línea
 fig_ritmo = px.line(dfCases.head(25), x="fecha", y="pulso")
 
+
 #Actividad física
 con = Connection()
 con.openConnection()
-query = pd.read_sql_query(sql.reporte_actividad(), con.connection)
+consulta = sql.reporte_actividad() #Consulta para crear tabla de datos del usuario
+cursor = con.connection.cursor()
+cursor.execute(consulta)
+activ_data = cursor.fetchall()
+fecha = []
+actividad = []
+for i in activ_data:
+    fecha.append(i[0])
+    actividad.append(i[1])  
 con.closeConnection()
-dfCases = pd.DataFrame(query, columns=["fecha","actividad"])
 
-# Grafico línea
-fig_actividad = px.line(dfCases.head(25), x="fecha", y="actividad")
+fig_actividad = go.Figure(data=[go.Scatter(x=fecha, y=actividad)])
 
-#Reporte de alertas
 
 con = Connection()
 con.openConnection()
@@ -159,6 +166,8 @@ for i in range (0,5):
     dias.append(dia)
     num_not = get_number_of_notifications_given_day(cursor,"ejemplo@ejemplo.com",dia)
     notifs.append(num_not)
+    
+con.closeConnection()
     
 fig_alertas = go.Figure(data=[go.Scatter(x=dias, y=notifs)])
 
@@ -398,4 +407,3 @@ def render_page_content(pathname):
 
 if __name__ == "__main__":
     app.run_server(port=8888, debug=True)
-
