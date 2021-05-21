@@ -20,6 +20,7 @@ import plotly.express as px
 import pandas as pd
 from Connection import Connection
 import consultas as sql
+from datetime import datetime, timedelta
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -117,6 +118,50 @@ dfCases = pd.DataFrame(query, columns=["fecha","actividad"])
 # Grafico línea
 fig_actividad = px.line(dfCases.head(25), x="fecha", y="actividad")
 
+#Reporte de alertas
+
+con = Connection()
+con.openConnection()
+cursor = con.connection.cursor()
+
+def get_number_of_notifications_given_day(cursor, user, timestamp) -> int:
+    """
+    Obtiene el numero de notificaciones (numero de filas) en la tabla 
+    'notificaciones' en un dia especifico dado un usuario
+    Input:
+        cursor (psycopg2.connect.cursor()): cursor conectado a la base de datos
+        user (str): correo del usuario
+        timestamp
+    Output:
+        numero_de_notificaciones (int): numero de notificaciones/filas 
+                                        en la tabla
+    """
+
+    try:
+        sql_sentence = """
+            SELECT count(*) 
+            FROM Notificaciones
+            WHERE correo_usuario = '{}' AND fecha > '{} 0:0:0' AND fecha < '{} 23:59:59'
+            """.format(user, timestamp, timestamp)
+        cursor.execute(sql_sentence)
+        rows = cursor.fetchall()
+    except:
+        raise NameError(
+            "El numero de notificaciones de un usuario no pudo ser extraido")
+
+    numero_de_notificaciones = rows[0][0]
+    return numero_de_notificaciones
+
+dias = []
+notifs = []
+for i in range (0,5):
+    dia = datetime.date(datetime.now() - timedelta(i))
+    dias.append(dia)
+    num_not = get_number_of_notifications_given_day(cursor,"ejemplo@ejemplo.com",dia)
+    notifs.append(num_not)
+    
+fig_alertas = go.Figure(data=[go.Scatter(x=dias, y=notifs)])
+
 # the style arguments for the upperbar
 
 UPPERBAR_STYLE = {
@@ -131,7 +176,7 @@ UPPERBAR_STYLE = {
     'textAlign': 'center'
 }
 
-upperbar = html.Div([html.H1("-Título del Proyecto-")],
+upperbar = html.Div([html.H1("NOMBRE DEL PROYECTO")],
                     style = UPPERBAR_STYLE)
 
 # the style arguments for the sidebar. We use position:fixed and a fixed width
@@ -220,8 +265,9 @@ sidebar = html.Div(
                 dbc.NavLink("Datos de Usuario", href="/user_data", active="exact"),
                 dbc.NavLink("Reporte de Actividad", href="/reporte_act", active="exact"),
                 dbc.NavLink("Reporte de Pulso Cardiaco", href="/reporte_rit", active="exact"),
+                dbc.NavLink("Reporte de Alertas", href="/alertas", active="exact"),
                 dbc.NavLink("Información sobre el Proyecto", href="/info", active="exact"),
-                dbc.NavLink("Guía de Uso", href="/guia", active="exact"),
+                #dbc.NavLink("Guía de Uso", href="/guia", active="exact"),
             ],
             vertical=True,
             pills=True,
@@ -322,11 +368,22 @@ def render_page_content(pathname):
                 html.P("Si desea acceder al código o obtener mayor información sobre el proyecto, lo invitamos a revisar nuestro repositorio en Github: https://github.com/DarkfireT09/Monitoreo-Sistema-Muscoloesqueletico"),
                 ])
                 
-    elif pathname == "/guia":
+   #"""elif pathname == "/guia":
+        #return html.Div(children=[
+                #html.H1("Guía de Uso"),
+                #html.P("Aquí insertar guía de uso del dispositivo"),
+               #])"""
+    
+    elif pathname == "/alertas":
+        
         return html.Div(children=[
-                html.H1("Guía de Uso"),
-                html.P("Aquí insertar guía de uso del dispositivo"),
-               ])
+                html.H1("Número de alertas de los últimos 5 días"),
+                dcc.Graph(
+                    id='alerts',
+                    figure= fig_alertas
+                    ),
+            ])
+    
     
     
     # If the user tries to reach a different page, return a 404 message
