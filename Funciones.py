@@ -1,3 +1,4 @@
+
 import serial
 import time
 import psycopg2
@@ -107,8 +108,4 @@ def data_send_pulsometer(conexion, pulso: float, correo_usuario: str):
         conexion.rollback()
         print("data_send_pulsometer Error: No se pudo mandar ")
 
-<<<<<<< HEAD
 conexion = connect_to_data_base()
-=======
-conexion = connect_to_data_base()
->>>>>>> 77685a3053cb6a96e50380340cc38fff104c1872
