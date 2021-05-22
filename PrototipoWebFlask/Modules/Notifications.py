@@ -85,7 +85,7 @@ def manage_notifications(cursor) -> None:
     def manage_notifications_helper(cursor):
         it = 0
         resource = SpontitResource(
-            "david_melendez9417", "16T6GULKQWW93W0LILUB7L8HL16QC207LSIYJQP4RJQ1GKZZ1UB2OCEL0629772A7BBKEJKO9ZOUD2QHN4PAYN09CK67MBAWG17H")
+            "daniel_leyva4642", "LLJPM2VU1YO8UF4SG8H46LQFJGMXED8VROWQVDV74IUZQRFRZJVZAVRLH7LGPBIC5JVXWQI3PB53GZV05XF20X4LNYW9T8XCY4ZE")
         while True:
             # Si una nueva fila en la tabla 'Notificaciones' es detectada
             # Mandar una notificacion push
