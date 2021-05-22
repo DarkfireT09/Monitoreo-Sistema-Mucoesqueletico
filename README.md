@@ -13,7 +13,6 @@ Cornerstone. Proyecto No. 4. Monitoreo Sistema Muscoesquelético. 2021.
 
 
 <!-- TABLE OF CONTENTS -->
-<details open="open">
   <summary><h2 style="display: inline-block">Tabla</h2></summary>
   <ol>
     <li><a href="#Motivacion">Motivacion</a></li>
@@ -23,7 +22,6 @@ Cornerstone. Proyecto No. 4. Monitoreo Sistema Muscoesquelético. 2021.
     <li><a href="#output-grafico">Output Grafico</a></li>
     <li><a href="#integracion">Integracion</a></li>
   </ol>
-</details>
 
 ## Motivacion:
 
