@@ -1,5 +1,3 @@
-# Monitoreo-Sistema-Muscoloesqueletico
-Cornerstone. Proyecto No. 4. Monitoreo Sistema Muscoesquelético. 2021.
 
 <!-- PROJECT LOGO -->
 <br />
