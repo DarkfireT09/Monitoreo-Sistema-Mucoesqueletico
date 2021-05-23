@@ -93,7 +93,7 @@ void loop() {
         BT.println(0); // indicador de alerta
         
 
-        if (accel_ang_x < 60) { // condicion de alerta
+        if (accel_ang_x < 50) { // condicion de alerta
             a1++;
             delay(1000);
         } else {

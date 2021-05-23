@@ -20,6 +20,7 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 from Connection import Connection
+import Modules.Notifications as nt
 import consultas as sql
 from datetime import datetime, timedelta
 
@@ -39,6 +40,12 @@ for i in user_data[0]:
 con.closeConnection()
 fila1=["Nombre","Apellido","Edad","Peso","Estatura", "Genero", "Ritmo Basal", "Ritmo de Reserva"]
    
+#-----
+con2 = Connection()
+con2.openConnection()
+notificacion_cursor = con2.connection.cursor()
+nt.manage_notifications(notificacion_cursor)
+#-----
 #Tabla
 tabla_usuario = go.Figure(data=[go.Table(header=dict(values=['Datos', 'Datos del Usuario'],
                                                      font_size=16,
@@ -185,7 +192,7 @@ UPPERBAR_STYLE = {
     'textAlign': 'center'
 }
 
-upperbar = html.Div([html.H1("NOMBRE DEL PROYECTO")],
+upperbar = html.Div([html.H1("KARVOHAND")],
                     style = UPPERBAR_STYLE)
 
 # the style arguments for the sidebar. We use position:fixed and a fixed width

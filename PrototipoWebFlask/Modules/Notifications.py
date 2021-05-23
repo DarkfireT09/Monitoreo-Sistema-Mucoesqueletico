@@ -99,9 +99,9 @@ def manage_notifications(cursor) -> None:
                     """
                 )
                 data = cursor.fetchall()
-                print(data[0][0])
-                r = resource.push("Debes cambiar de posición!")
-            print("it ", it)
+                # print(data[0][0])
+                r = resource.push(data[0][0])
+            # print("it ", it)
             it += 1
             time.sleep(1)
 
