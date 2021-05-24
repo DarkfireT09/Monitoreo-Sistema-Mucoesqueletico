@@ -53,7 +53,7 @@
 ## Software:
 - **Arduino**:
 
-  Los programas `Hola mundo` de los sensores de pueden encontrar en la capeta [Sensores](\Sensores).
+  Los programas `Hola mundo` de los sensores de pueden encontrar en la capeta [Sensores](/Sensores).
 
   El programa [main.ino](\main/main.ino) Se encarga de recolectar los datos de los sensores pulsometro y pulsioximetro de la siguiente manera: Se toman 1800 lecuras del acelerometro, una cada segundo (30 minutos) en donde si se calcula una posicion menor a 50° se generará una alerta, encendiendo el motor de vibracion y el LED. Al pasar las 1800 lecturas, se tomaran 10 lecturas del pulsometro las cuales se promediarán. Todos estos datos son enviados a traves del modulo Bluetooht.
   ### Formato de envio:
