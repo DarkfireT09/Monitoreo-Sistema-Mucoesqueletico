@@ -27,7 +27,7 @@
 
 
 ## Flujo de datos: 
-![Image text](\images/flujo%20de%20datos.png)
+![Image text](/images/flujo%20de%20datos.png)
 ## Hardware: 
 ### Equipo:
 #### Sensores: 
