@@ -3,6 +3,7 @@
 <p align="center">
   <h1 align="center">KARVOHAND</h3>
 </p>
+
 <!-- TABLE OF CONTENTS -->- [Tabla de contenidos:]
 - [Flujo de datos:](#flujo-de-datos)
 - [Hardware:](#hardware)
