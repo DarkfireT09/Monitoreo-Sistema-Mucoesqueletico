@@ -78,6 +78,7 @@ Esta notificación se ejecuta cuando hay una nueva inserción en la tabla Notifi
 - Usuario.
 - Fecha.
 - Mensaje.
+
 Sin embargo, como las notificaciones solo se ejecutan al momento de inserción, es necesario revisar constantemente el estado de la Tabla. Esto se logra mediante una función en la aplicación web llamada "manage notifications". Específicamente se utiliza un thread adicional que ejecuta sentencias de count a la tabla Notificaciones para un usuario específico.
 
 ![Notificación](/images/notifi.jpeg)
