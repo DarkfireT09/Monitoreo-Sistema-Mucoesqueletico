@@ -46,7 +46,7 @@
 #### Arduino:
 - Arduino Lilypad.
 ### Esquema del circuito.
-![Esquema de conexión](\images/Esquema_final.jpg)
+![Esquema de conexión](/images/Esquema_final.jpg)
 
 
 
@@ -70,7 +70,7 @@
 
   Puntualizando en las tablas, están Usuario, Pulsómetro, Género, Acelerómetro, y Notificaciones. Cada una cumple una función específica. La tabla Usuario almacena los datos de cada usuario como peso, estatura, etc. con el fin de poder aplicar correctamente las fórmulas como la de Karvonen. Las tablas Pulsómetro y Acelerómetro almacenan datos específicos de cada sensor para cada usuario. Finalmente, la tabla Notificaciones se explorará posteriormente en la sección Aplicación Web. 
 
-  ![Diagrama Base de datos](\images/base_de_datos.jpeg)
+  ![Diagrama Base de datos](/images/base_de_datos.jpeg)
 
 
 ## Página Web:
@@ -86,7 +86,7 @@ Esta notificación se ejecuta cuando hay una nueva inserción en la tabla Notifi
 - Mensaje.
 Sin embargo, como las notificaciones solo se ejecutan al momento de inserción, es necesario revisar constantemente el estado de la Tabla. Esto se logra mediante una función en la aplicación web llamada "manage notifications". Específicamente se utiliza un thread adicional que ejecuta sentencias de count a la tabla Notificaciones para un usuario específico.
 
-![Notificación](\images/notifi.jpeg)
+![Notificación](/images/notifi.jpeg)
 ## Resultado final:
-![Prototipo Final](\images/prototipo.jpeg)
-![Prototipo Final 2](\images/iniciopagina.jpeg)
+![Prototipo Final](/images/prototipo.jpeg)
+![Prototipo Final 2](/images/iniciopagina.jpeg)
